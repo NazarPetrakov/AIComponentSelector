@@ -9,9 +9,14 @@
   <ItemGroup>
     <Folder Include="DTOs\" />
     <Folder Include="Helpers\" />
-    <Folder Include="IRepositories\" />
-    <Folder Include="IServices\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ComponentSelector.Domain\ComponentSelector.Domain.csproj" />
   </ItemGroup>
 
 </Project>
