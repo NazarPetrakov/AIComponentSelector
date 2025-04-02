@@ -7,7 +7,6 @@ namespace ComponentSelector.API.Controllers;
 
 public class ComponentsController(IComponentsService componentsService) : BaseApiController
 {
-    [Authorize]
     [HttpGet]
     public async Task<ActionResult<List<Component>>> GetComponents()
     {

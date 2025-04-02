@@ -42,8 +42,8 @@ public class AuthService(UserManager<AppUser> userManager,
 
         if (!result.Succeeded)
         {
-            var errorMessages = string.Join(";\n", result.Errors.Select(e => e.Description));
-            throw new Exception($"User registration failed: \n{errorMessages}");
+            var errorMessages = string.Join(";", result.Errors.Select(e => e.Description));
+            throw new Exception(errorMessages);
         }
 
         return new AuthUserDto

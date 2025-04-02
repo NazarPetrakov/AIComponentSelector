@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
-    <a class="navbar-brand" routerLink="/" routerLinkActive="active"
-      >Dating app</a
-    >
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active">
+      Dating app
+    </a>
+
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
       <li class="nav-item">
         <a
@@ -10,36 +11,56 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           class="nav-link"
-          >Catalog</a
         >
+          Catalog
+        </a>
       </li>
-      <li class="nav-item">
-        <a routerLink="/lists" routerLinkActive="active" class="nav-link"
-          >Lists</a
+
+      @if (accountService.currentUser()) {
+      <div class="btn-group" dropdown>
+        <button
+          id="button-basic"
+          dropdownToggle
+          type="button"
+          class="btn btn-primary dropdown-toggle"
+          aria-controls="dropdown-basic"
         >
-      </li>
-      <li class="nav-item">
-        <a routerLink="/messages" routerLinkActive="active" class="nav-link"
-          >Messages</a
+          {{ accountService.currentUser()?.userName }}
+          <span class="caret"></span>
+        </button>
+        <ul
+          id="dropdown-basic"
+          *dropdownMenu
+          class="dropdown-menu"
+          role="menu"
+          aria-labelledby="button-basic"
         >
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin" routerLinkActive="active" class="nav-link"
-          >Admin</a
-        >
-      </li>
-      <li class="nav-item">
-        <a routerLink="/errors" routerLinkActive="active" class="nav-link"
-          >Errors</a
-        >
-      </li>
+          <li role="menuitem"><a class="dropdown-item" routerLink="/settings">Settings</a></li>
+          <li role="menuitem">
+            <a class="dropdown-item" style="cursor: pointer;" (click)="logout()">Logout</a>
+          </li>
+        </ul>
+      </div>
+      }
     </ul>
 
-    <form class="d-flex">
+    <ul class="navbar-nav ms-auto">
+      @if (!accountService.currentUser()) {
+      <li class="nav-item">
+        <a routerLink="/login" routerLinkActive="active" class="nav-link">
+          Login
+        </a>
+      </li>
+      }
+    </ul>
+
+    @if (accountService.currentUser()) {
+    <form class="d-flex ms-2">
       <input class="form-control me-sm-2" type="search" placeholder="Search" />
       <button class="btn btn-secondary my-2 my-sm-0" type="submit">
         Search
       </button>
     </form>
+    }
   </div>
 </nav>
