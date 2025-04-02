@@ -1,11 +1,13 @@
 using ComponentSelector.Application.IServices;
 using ComponentSelector.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ComponentSelector.API.Controllers;
 
 public class ComponentsController(IComponentsService componentsService) : BaseApiController
 {
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<List<Component>>> GetComponents()
     {
