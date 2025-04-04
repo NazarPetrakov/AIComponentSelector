@@ -1,60 +1,16 @@
-using System.Text;
-using ComponentSelector.Application.IRepositories;
-using ComponentSelector.Application.IServices;
-using ComponentSelector.Application.Services;
+using ComponentSelector.API.Extensions;
 using ComponentSelector.Domain.Entities;
 using ComponentSelector.Infrastructure.Data;
-using ComponentSelector.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-});
-
-builder.Services.AddCors();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<IComponentsRepository, ComponentsRepository>();
-builder.Services.AddScoped<IComponentsService, ComponentsService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-
-builder.Services.AddIdentityCore<AppUser>(o =>
-{
-    o.Password.RequiredLength = 8;
-    o.Password.RequireNonAlphanumeric = false;
-
-}).AddRoles<AppRole>().AddRoleManager<RoleManager<AppRole>>()
-    .AddEntityFrameworkStores<AppDbContext>();
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    var key = configuration.GetSection("JwtToken").GetValue<string>("key")
-            ?? throw new InvalidOperationException("Can not get token key from configuration");
-
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-    };
-});
+builder.Services.AddAppServices(configuration);
+builder.Services.AddAuthServices(configuration);
 
 var app = builder.Build();
 
@@ -67,6 +23,8 @@ app.UseCors(x => x.AllowAnyHeader()
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseExceptionHandler();
 
 app.MapControllers();
 

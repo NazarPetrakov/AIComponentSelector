@@ -1,4 +1,4 @@
-using ComponentSelector.Application.DTOs;
+using ComponentSelector.Application.Contracts;
 
 namespace ComponentSelector.Application.IServices;
 

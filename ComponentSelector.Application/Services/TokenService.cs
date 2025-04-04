@@ -1,10 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using ComponentSelector.Application.IServices;
 using ComponentSelector.Domain.Entities;
+using ComponentSelector.Domain.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Protocols.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ComponentSelector.Application.Services;
@@ -15,12 +18,13 @@ public class TokenService(UserManager<AppUser> userManager,
     public async Task<string> GenerateTokenAsync(AppUser user)
     {
         var key = configuration.GetSection("JwtToken").GetValue<string>("key")
-            ?? throw new InvalidOperationException("Can not get token key from configuration");
+            ?? throw new InvalidConfigurationException("JWT token key is missing in configuration.");
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        if (user.UserName == null) throw new Exception("No username for user");
+        if (user.UserName == null)
+            throw new InvalidUserException("User must have a valid username to generate a token.");
 
         var claims = new List<Claim>
         {

@@ -1,5 +1,5 @@
 using AutoMapper;
-using ComponentSelector.Application.DTOs;
+using ComponentSelector.Application.Contracts;
 using ComponentSelector.Domain.Entities;
 
 namespace ComponentSelector.Application.Helpers;

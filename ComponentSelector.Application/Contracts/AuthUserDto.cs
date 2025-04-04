@@ -1,4 +1,4 @@
-namespace ComponentSelector.Application.DTOs;
+namespace ComponentSelector.Application.Contracts;
 
 public class AuthUserDto
 {

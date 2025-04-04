@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ComponentSelector.Application\ComponentSelector.Application.csproj" />
     <ProjectReference Include="..\ComponentSelector.Infrastructure\ComponentSelector.Infrastructure.csproj" />
   </ItemGroup>
