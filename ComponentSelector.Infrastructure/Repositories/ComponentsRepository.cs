@@ -1,4 +1,5 @@
-using System;
+using ComponentSelector.Application.Helpers.Pagination;
+using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Application.IRepositories;
 using ComponentSelector.Domain.Entities;
 using ComponentSelector.Infrastructure.Data;
@@ -8,8 +9,12 @@ namespace ComponentSelector.Infrastructure.Repositories;
 
 public class ComponentsRepository(AppDbContext context) : IComponentsRepository
 {
-    public async Task<ICollection<Component>> GetComponentsAsync()
+    public async Task<PagedList<Component>> GetComponentsAsync(
+        ComponentQueryParams componentQueryParams)
     {
-        return await context.Components.Take(20).ToListAsync();
+        var query = context.Components.AsNoTracking();
+
+        return await PagedList<Component>.PaginateAsync(query,
+            componentQueryParams.PageNumber, componentQueryParams.PageSize);
     }
 }

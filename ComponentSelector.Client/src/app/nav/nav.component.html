@@ -3,20 +3,68 @@
     <a class="navbar-brand" routerLink="/" routerLinkActive="active">
       Dating app
     </a>
-
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
       <li class="nav-item">
-        <a
-          routerLink="/catalog"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="nav-link"
-        >
-          Catalog
-        </a>
+        <div class="btn-group" dropdown>
+          <button
+            id="button-basic"
+            dropdownToggle
+            type="button"
+            class="btn btn-primary dropdown-toggle"
+            aria-controls="dropdown-basic"
+          >
+            Catalog
+            <span class="caret"></span>
+          </button>
+          <ul
+            id="dropdown-basic"
+            *dropdownMenu
+            class="dropdown-menu"
+            role="menu"
+            aria-labelledby="button-basic"
+          >
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/catalog/video-cards"
+                >Відеокарти</a
+              >
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/catalog">SSD</a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/catalog/hdd">Hdd</a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/catalog/cooler"
+                >Системи охолодження</a
+              >
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/catalog/memory"
+                >Оперативна пам'ять</a
+              >
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/catalog/motherboard"
+                >Материнські плати</a
+              >
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/catalog/processor"
+                >Процесори</a
+              >
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/catalog/psu"
+                >Блоки живлення</a
+              >
+            </li>
+          </ul>
+        </div>
       </li>
 
       @if (accountService.currentUser()) {
+
       <div class="btn-group" dropdown>
         <button
           id="button-basic"
@@ -25,6 +73,7 @@
           class="btn btn-primary dropdown-toggle"
           aria-controls="dropdown-basic"
         >
+          <i class="bi bi-person"></i>
           {{ accountService.currentUser()?.userName }}
           <span class="caret"></span>
         </button>
@@ -35,9 +84,15 @@
           role="menu"
           aria-labelledby="button-basic"
         >
-          <li role="menuitem"><a class="dropdown-item" routerLink="/settings">Settings</a></li>
           <li role="menuitem">
-            <a class="dropdown-item" style="cursor: pointer;" (click)="logout()">Logout</a>
+            <a class="dropdown-item" routerLink="/settings"
+              ><i class="bi bi-gear-fill me-1"></i>Settings</a
+            >
+          </li>
+          <li role="menuitem">
+            <a class="dropdown-item" style="cursor: pointer" (click)="logout()"
+              ><i class="bi bi-door-closed-fill me-1"></i>Logout</a
+            >
           </li>
         </ul>
       </div>
@@ -48,6 +103,7 @@
       @if (!accountService.currentUser()) {
       <li class="nav-item">
         <a routerLink="/login" routerLinkActive="active" class="nav-link">
+          <i class="bi bi-door-open"></i>
           Log in
         </a>
       </li>

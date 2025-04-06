@@ -1,8 +1,13 @@
+using ComponentSelector.Application.Contracts;
+using ComponentSelector.Application.Helpers.Pagination;
+using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace ComponentSelector.Application.IServices;
 
 public interface IComponentsService
 {
-    Task<ICollection<Component>> GetComponentsAsync();
+    Task<PagedList<ComponentDto>> GetComponentsAsync(
+        HttpResponse httpResponse, ComponentQueryParams componentQueryParams);
 }

@@ -1,13 +1,31 @@
+using AutoMapper;
+using ComponentSelector.Application.Contracts;
+using ComponentSelector.Application.Extensions;
+using ComponentSelector.Application.Helpers.Pagination;
+using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Application.IRepositories;
 using ComponentSelector.Application.IServices;
-using ComponentSelector.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace ComponentSelector.Application.Services;
 
-public class ComponentsService(IComponentsRepository componentsRepository) : IComponentsService
+public class ComponentsService(IComponentsRepository componentsRepository, IMapper mapper) : IComponentsService
 {
-    public async Task<ICollection<Component>> GetComponentsAsync()
+    public async Task<PagedList<ComponentDto>> GetComponentsAsync(
+        HttpResponse httpResponse, ComponentQueryParams componentQueryParams)
     {
-        return await componentsRepository.GetComponentsAsync();
+        var components = await componentsRepository.GetComponentsAsync(componentQueryParams);
+
+        httpResponse.AddPaginationHeader(components);
+
+        var componentDtos = mapper.Map<List<ComponentDto>>(components);
+
+        return new PagedList<ComponentDto>
+        (
+            componentDtos,
+            components.TotalCount,
+            components.CurrentPage,
+            components.PageSize
+        );
     }
 }
