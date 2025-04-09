@@ -11,7 +11,7 @@ export const routes: Routes = [
     path: '',
     runGuardsAndResolvers: 'always',
     children: [
-      { path: 'catalog', component: CatalogComponent },
+      { path: 'catalog/:category', component: CatalogComponent },
       { path: 'settings', component: SettingsComponent },
     ],
   },

@@ -5,6 +5,9 @@ using ComponentSelector.Application.Helpers.Pagination;
 using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Application.IRepositories;
 using ComponentSelector.Application.IServices;
+using ComponentSelector.Application.Specification;
+using ComponentSelector.Domain.Entities;
+using ComponentSelector.Domain.Specification;
 using Microsoft.AspNetCore.Http;
 
 namespace ComponentSelector.Application.Services;
@@ -14,7 +17,9 @@ public class ComponentsService(IComponentsRepository componentsRepository, IMapp
     public async Task<PagedList<ComponentDto>> GetComponentsAsync(
         HttpResponse httpResponse, ComponentQueryParams componentQueryParams)
     {
-        var components = await componentsRepository.GetComponentsAsync(componentQueryParams);
+        var specification = new FilteredComponentSpecification(componentQueryParams);
+        var components = await componentsRepository.GetComponentsAsync(componentQueryParams,
+           specification);
 
         httpResponse.AddPaginationHeader(components);
 

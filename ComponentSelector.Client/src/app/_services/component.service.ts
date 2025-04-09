@@ -23,11 +23,14 @@ export class ComponentService {
   componentsCache = new Map();
 
   getComponents() {
+    console.log('hi frim servi')
     const cacheKey = Object.keys(this.componentQueryParams())
       .map((key) => `${key}${(this.componentQueryParams() as any)[key]}`)
       .join('-');
     const cachedResponse = this.componentsCache.get(cacheKey);
     if (cachedResponse) {
+      console.log('cachedResponse', cachedResponse);
+
       setPaginationResponse(cachedResponse, this.paginatedResult);
       return of(cachedResponse.body);
     }
@@ -36,7 +39,31 @@ export class ComponentService {
       this.componentQueryParams().pageNumber,
       this.componentQueryParams().pageSize
     );
-    
+    if (this.componentQueryParams().category) {
+      params = params.append('category', this.componentQueryParams().category!);
+    }
+    if (this.componentQueryParams().orderBy) {
+      params = params.append('orderBy', this.componentQueryParams().orderBy!);
+    }
+    if (this.componentQueryParams().orderByDesc) {
+      params = params.append(
+        'orderByDesc',
+        this.componentQueryParams().orderByDesc!
+      );
+    }
+    if (this.componentQueryParams().minPrice) {
+      params = params.append('minPrice', this.componentQueryParams().minPrice!);
+    }
+    if (this.componentQueryParams().maxPrice) {
+      params = params.append('maxPrice', this.componentQueryParams().maxPrice!);
+    }
+    if (this.componentQueryParams().availability) {
+      params = params.append(
+        'availability',
+        this.componentQueryParams().availability!
+      );
+    }
+
     return this.http
       .get<ComputerComponent[]>(this.baseUrl + 'components', {
         observe: 'response',
@@ -48,5 +75,16 @@ export class ComponentService {
           this.componentsCache.set(cacheKey, response);
         })
       );
+  }
+  resetFilters() {
+    this.componentQueryParams.update((params) => {
+      (params.pageNumber = 1),
+        (params.orderBy = undefined),
+        (params.orderByDesc = undefined),
+        (params.minPrice = undefined),
+        (params.maxPrice = undefined),
+        (params.availability = undefined);
+      return params;
+    });
   }
 }
