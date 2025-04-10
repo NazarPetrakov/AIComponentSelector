@@ -6,8 +6,6 @@ using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Application.IRepositories;
 using ComponentSelector.Application.IServices;
 using ComponentSelector.Application.Specification;
-using ComponentSelector.Domain.Entities;
-using ComponentSelector.Domain.Specification;
 using Microsoft.AspNetCore.Http;
 
 namespace ComponentSelector.Application.Services;

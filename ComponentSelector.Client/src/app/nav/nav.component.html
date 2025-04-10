@@ -60,9 +60,7 @@
               >
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/cases"
-                >Корпуси</a
-              >
+              <a class="dropdown-item" routerLink="/catalog/cases">Корпуси</a>
             </li>
           </ul>
         </div>
@@ -116,8 +114,15 @@
     </ul>
 
     @if (accountService.currentUser()) {
-    <form class="d-flex ms-2">
-      <input class="form-control me-sm-2" type="search" placeholder="Search" />
+    <form class="d-flex ms-2" (ngSubmit)="onSearch()">
+      <input
+        class="form-control me-sm-2"
+        [(ngModel)]="term"
+        name="search"
+        type="search"
+        placeholder="Пошук..."
+        aria-label="Search"
+      />
       <button class="btn btn-secondary my-2 my-sm-0" type="submit">
         Search
       </button>

@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Domain.Entities;
 using ComponentSelector.Domain.Specification;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComponentSelector.Application.Specification;
 
@@ -17,6 +18,11 @@ public class FilteredComponentSpecification : ComponentSpecification
     public FilteredComponentSpecification(ComponentQueryParams componentParams)
         : base(BuildCriteria(componentParams))
     {
+        if (!string.IsNullOrWhiteSpace(componentParams.SearchTerm))
+        {
+            var searchOrderByExpression = GetSearchOrderByExpression(componentParams.SearchTerm.ToLower());
+            AddOrderBy(searchOrderByExpression);
+        }
         var orderByExpression = GetOrderByExpression(componentParams.OrderBy);
         var orderByDescExpression = GetOrderByExpression(componentParams.OrderByDesc);
 
@@ -45,6 +51,18 @@ public class FilteredComponentSpecification : ComponentSpecification
             else
                 criteria = criteria.And(c => !_availableStatuses.Contains(c.Availability));
 
+        if (!string.IsNullOrWhiteSpace(componentParams.SearchTerm))
+        {
+            var terms = componentParams.SearchTerm
+                .ToLower()
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var term in terms)
+            {
+                criteria = criteria.And(c => (c.Title ?? "").ToLower().Contains(term));
+            }
+        }
+
         return criteria;
     }
     private static Expression<Func<Component, object>>? GetOrderByExpression(string? orderBy)
@@ -54,9 +72,16 @@ public class FilteredComponentSpecification : ComponentSpecification
             "id" => c => c.Id,
             "category" => c => c.Category!,
             "price" => c => c.Price!,
-            // "availability" => c => c.Availability!,
-            // "title" => c => c.Title!,
+            "availability" => c => c.Availability!,
+            "title" => c => c.Title!,
             _ => null
         };
+    }
+    public static Expression<Func<Component, object>> GetSearchOrderByExpression(string searchTerm)
+    {
+        return c =>
+        (c.Title != null && EF.Functions.Like(c.Title, searchTerm + "%")) ? 0 :
+        (c.Title != null && EF.Functions.Like(c.Title, "% " + searchTerm + " %")) ? 1 :
+        2;
     }
 }

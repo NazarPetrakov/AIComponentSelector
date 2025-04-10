@@ -23,7 +23,7 @@ export class ComponentService {
   componentsCache = new Map();
 
   getComponents() {
-    console.log('hi frim servi')
+    // console.log('hi frim servi', this.componentQueryParams())
     const cacheKey = Object.keys(this.componentQueryParams())
       .map((key) => `${key}${(this.componentQueryParams() as any)[key]}`)
       .join('-');
@@ -41,6 +41,12 @@ export class ComponentService {
     );
     if (this.componentQueryParams().category) {
       params = params.append('category', this.componentQueryParams().category!);
+    }
+    if (this.componentQueryParams().searchTerm) {
+      params = params.append(
+        'searchTerm',
+        this.componentQueryParams().searchTerm!
+      );
     }
     if (this.componentQueryParams().orderBy) {
       params = params.append('orderBy', this.componentQueryParams().orderBy!);
@@ -84,6 +90,7 @@ export class ComponentService {
         (params.minPrice = undefined),
         (params.maxPrice = undefined),
         (params.availability = undefined);
+        (params.searchTerm = undefined)
       return params;
     });
   }

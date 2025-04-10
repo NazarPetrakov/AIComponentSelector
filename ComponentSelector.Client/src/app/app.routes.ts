@@ -10,11 +10,10 @@ export const routes: Routes = [
   {
     path: '',
     runGuardsAndResolvers: 'always',
-    children: [
-      { path: 'catalog/:category', component: CatalogComponent },
-      { path: 'settings', component: SettingsComponent },
-    ],
+    children: [{ path: 'settings', component: SettingsComponent }],
   },
+  { path: 'catalog/search', component: CatalogComponent },
+  { path: 'catalog/:category', component: CatalogComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', component: HomeComponent },

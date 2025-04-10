@@ -28,6 +28,7 @@ public static class SpecificationQueryBuilder
         {
             query = query.OrderByDescending(specification.OrderByDesc);
         }
+
         return query;
     }
 }

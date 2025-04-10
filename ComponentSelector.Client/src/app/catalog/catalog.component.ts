@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Query } from '@angular/core';
 import { ComponentService } from '../_services/component.service';
 import { ComponentCardComponent } from '../component-card/component-card.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
@@ -35,6 +35,7 @@ export class CatalogComponent implements OnInit {
         map(([params, queryParams]) => {
           return {
             category: params['category'],
+            searchTerm: queryParams['searchTerm'],
             page: +queryParams['page'] || 1,
             minPrice: queryParams['minPrice']
               ? +queryParams['minPrice']
@@ -49,10 +50,16 @@ export class CatalogComponent implements OnInit {
         })
       )
       .subscribe((data) => {
+        console.log('init data', data);
         this.currentPage = data.page;
 
         const currentCategory =
           this.componentsService.componentQueryParams().category;
+
+        if (!data.category) {
+          data.category = undefined;
+        }
+
         if (data.category !== currentCategory) {
           this.sortOption = 'default';
           data.orderBy = undefined;
@@ -62,6 +69,7 @@ export class CatalogComponent implements OnInit {
         this.componentsService.componentQueryParams.update((queryParams) => {
           queryParams.category = data.category;
           queryParams.pageNumber = data.page;
+          queryParams.searchTerm = data.searchTerm;
           queryParams.minPrice = data.minPrice;
           queryParams.maxPrice = data.maxPrice;
           queryParams.orderBy = data.orderBy;
@@ -148,6 +156,11 @@ export class CatalogComponent implements OnInit {
 
     this.componentsService.resetFilters();
     const category = this.route.snapshot.params['category'];
-    this.router.navigate(['catalog', category]);
+
+    if (!category) {
+      this.router.navigate(['']);
+    } else {
+      this.router.navigate(['catalog', category]);
+    }
   }
 }

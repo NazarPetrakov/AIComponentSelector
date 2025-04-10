@@ -29,6 +29,4 @@ public abstract class BaseSpecification<TEntity> where TEntity : BaseEntity
     {
         OrderByDesc = orderByDescExpression;
     }
-
-
 }

@@ -7,4 +7,5 @@ export class ComponentQueryParams extends PaginationParams {
   minPrice?: number;
   maxPrice?: number;
   availability?: boolean;
+  searchTerm?: string;
 }
