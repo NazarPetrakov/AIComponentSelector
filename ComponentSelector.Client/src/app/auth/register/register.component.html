@@ -74,6 +74,30 @@
       </div>
 
       <div class="mb-3">
+        <label for="country" class="form-label">Country</label>
+        <input
+          type="text"
+          id="country"
+          class="form-control"
+          formControlName="country"
+          placeholder="Enter country"
+          [class.is-invalid]="
+            registerForm.get('country')?.invalid &&
+            registerForm.get('country')?.touched
+          "
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            registerForm.get('country')?.invalid &&
+            registerForm.get('country')?.touched
+          "
+        >
+          Country must be less than 256 symbols .
+        </div>
+      </div>
+
+      <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <div class="input-group">
           <input

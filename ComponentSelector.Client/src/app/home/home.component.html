@@ -1,1 +1,43 @@
-<p>home works!</p>
+<!-- Hero секція -->
+<div class="hero mb-4">
+    <h1>Підбір ПК за допомогою Штучного Інтелекту</h1>
+    <p class="lead">
+      Інноваційна система аналізу та підбору комп’ютерних комплектуючих
+    </p>
+    <a routerLink="/catalog/videocards" class="btn btn-light btn-lg mt-3">Почати пошук</a>
+    <a routerLink="/ai-selector" class="btn btn-light btn-lg mt-3 ms-3">AI Підбірка</a>
+  </div>
+  
+  <!-- Іконки можливостей -->
+  <div class="row text-center mb-4">
+    <div class="col-md-4">
+      <h5><i class="bi bi-search"></i> Розумний Пошук</h5>
+      <p>Фільтруй компоненти за ціною, брендом, категорією та інше</p>
+    </div>
+    <div class="col-md-4">
+      <h5><i class="bi bi-cpu"></i> Штучний Інтелект</h5>
+      <p>Отримай рекомендації на основі своїх потреб та бюджету</p>
+    </div>
+    <div class="col-md-4">
+      <h5><i class="bi bi-cash-coin"></i> Актуальні Ціни</h5>
+      <p>Дані про комплектуючі з останнім оновленням</p>
+    </div>
+  </div>
+  
+  <!-- Категорії -->
+  <h3 class="text-center mb-3">Популярні категорії</h3>
+  <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+    <div class="col" *ngFor="let category of categories">
+      <div class="card category-card h-100">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+          <h5 class="card-title text-capitalize">
+            {{ category }}
+          </h5>
+          <a [routerLink]="['/catalog', category]" class="card-button mt-3">
+            Перейти
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Authentication;
 using AutoMapper;
-using ComponentSelector.Application.Contracts;
+using ComponentSelector.Application.Contracts.User;
 using ComponentSelector.Application.IServices;
 using ComponentSelector.Domain.Entities;
 using ComponentSelector.Domain.Exceptions;
@@ -12,9 +12,54 @@ namespace ComponentSelector.Application.Services;
 public class AuthService(UserManager<AppUser> userManager,
     ITokenService tokenService, IMapper mapper) : IAuthService
 {
+    public async Task ChangePasswordAsync(string userId, ChangePasswordDto changePasswordDto)
+    {
+        var appUser = await userManager.FindByIdAsync(userId)
+            ?? throw new ItemNotFoundException($"No user with id: {userId}");
+
+        var passwordResult = await userManager.ChangePasswordAsync(appUser,
+            changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
+
+        if (!passwordResult.Succeeded)
+        {
+            throw new IdentityException(passwordResult);
+        }
+        await userManager.UpdateAsync(appUser);
+    }
+    public async Task ChangeEmailAsync(string userId, ChangeEmailDto changeEmailDto)
+    {
+        var appUser = await userManager.FindByIdAsync(userId)
+            ?? throw new ItemNotFoundException($"No user with id: {userId}");
+
+        var emailResult = await userManager.SetEmailAsync(appUser, changeEmailDto.NewEmail);
+
+        if (!emailResult.Succeeded)
+        {
+            throw new IdentityException(emailResult);
+        }
+        await userManager.UpdateAsync(appUser);
+    }
+    public async Task<UserDto> GetCurrentUserAsync(string userId)
+    {
+        if (string.IsNullOrEmpty(userId))
+            throw new ArgumentNullException("No user Id.");
+
+        var user = await userManager.FindByIdAsync(userId) ??
+            throw new ArgumentNullException($"No user with id: {userId}.");
+
+        var userRoles = await userManager.GetRolesAsync(user);
+        var role = userRoles.FirstOrDefault();
+
+        var userDto = mapper.Map<UserDto>(user);
+
+        if (!string.IsNullOrEmpty(role))
+            userDto.Role = role;
+
+        return userDto;
+    }
     public async Task<AuthUserDto> LoginAsync(LoginDto loginDto)
     {
-        var username = loginDto.UserName 
+        var username = loginDto.UserName
             ?? throw new InvalidCredentialException("Username is required for login.");
 
         var user = await userManager.FindByNameAsync(username)
@@ -31,7 +76,6 @@ public class AuthService(UserManager<AppUser> userManager,
             Token = await tokenService.GenerateTokenAsync(user)
         };
     }
-
     public async Task<AuthUserDto> RegisterAsync(RegisterDto registerDto)
     {
         if (await userManager.FindByNameAsync(registerDto.UserName) != null)
@@ -45,9 +89,10 @@ public class AuthService(UserManager<AppUser> userManager,
 
         if (!result.Succeeded)
         {
-            var errorMessages = string.Join(";", result.Errors.Select(e => e.Description));
-            throw new IdentityException(errorMessages);
+            throw new IdentityException(result);
         }
+
+        await userManager.AddToRoleAsync(user, "User");
 
         return new AuthUserDto
         {

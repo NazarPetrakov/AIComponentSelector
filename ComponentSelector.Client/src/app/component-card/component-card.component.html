@@ -1,13 +1,14 @@
 @if (component()) {
-    <div class="card">
-      <img
-        [src]="component().imageUrl"
-        alt="image"
-        style="height: 150px; width: 150px"
-      />
-      <h6>{{ component().title }}</h6>
-      <p>{{ component().category }}</p>
-      <p>Ціна: {{ component().price }} грн</p>
-      <a href="{{ component().link }}">Url: {{ component().link }}</a>
-    </div>
-    }
+<div class="card">
+  <img
+    [src]="component().imageUrl"
+    alt="image"
+    style="height: 150px; width: 150px"
+  />
+  <h6>{{ component().title }}</h6>
+  <p>{{ component().category }}</p>
+  <p>Ціна: {{ component().price }} грн</p>
+  <p>Кількість коментарів: {{ component().reviews }}</p>
+  <a href="{{ component().link }}">Url: {{ component().link }}</a>
+</div>
+}

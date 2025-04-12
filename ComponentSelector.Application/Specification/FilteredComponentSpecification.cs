@@ -74,6 +74,7 @@ public class FilteredComponentSpecification : ComponentSpecification
             "price" => c => c.Price!,
             "availability" => c => c.Availability!,
             "title" => c => c.Title!,
+            "reviews" => c => c.Reviews!,
             _ => null
         };
     }

@@ -32,6 +32,7 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       age: ['', [Validators.required, Validators.max(120), Validators.min(1)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      country: ['', Validators.max(256)],
       confirmedPassword: ['', Validators.required],
     });
   }

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ComponentSelector.Application.Contracts;
+namespace ComponentSelector.Application.Contracts.User;
 
 public class RegisterDto
 {
@@ -16,6 +16,8 @@ public class RegisterDto
     [Required]
     [Range(1, 120, ErrorMessage = "Age must be between 1 and 120.")]
     public int Age { get; set; }
+    [StringLength(256, ErrorMessage = "Country must be less than 256 characters.")]
+    public string? Country { get; set; }
 
     [Required(ErrorMessage = "Password is required.")]
     [StringLength(16, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 16 characters.")]

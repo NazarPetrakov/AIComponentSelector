@@ -35,6 +35,8 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger, IHo
                 errorResponse.Status = (int)HttpStatusCode.Unauthorized;
                 break;
             case InvalidConfigurationException:
+            case InvalidOperationException:
+            case ArgumentNullException:
                 errorResponse.Status = (int)HttpStatusCode.InternalServerError;
                 break;
             default:

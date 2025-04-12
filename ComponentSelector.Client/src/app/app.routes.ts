@@ -4,13 +4,32 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { SettingsComponent } from './auth/settings/settings.component';
+import { ProfileComponent } from './auth/settings/profile/profile.component';
+import { ChangePasswordComponent } from './auth/settings/change-password/change-password.component';
+import { ChangeEmailComponent } from './auth/settings/change-email/change-email.component';
+import { AiSelectingComponent } from './ai-selecting/ai-selecting.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: '',
     runGuardsAndResolvers: 'always',
-    children: [{ path: 'settings', component: SettingsComponent }],
+    children: [
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        children: [
+          { path: 'profile', component: ProfileComponent },
+          { path: 'change-password', component: ChangePasswordComponent },
+          { path: 'change-email', component: ChangeEmailComponent },
+          { path: '', redirectTo: 'profile', pathMatch: 'full' },
+        ],
+      },
+      {
+        path: 'ai-selector',
+        component: AiSelectingComponent,
+      },
+    ],
   },
   { path: 'catalog/search', component: CatalogComponent },
   { path: 'catalog/:category', component: CatalogComponent },

@@ -117,6 +117,12 @@ export class CatalogComponent implements OnInit {
     } else if (this.sortOption === 'priceDesc') {
       this.filters.orderBy = undefined;
       this.filters.orderByDesc = 'price';
+    } else if (this.sortOption === 'reviews') {
+      this.filters.orderBy = 'reviews';
+      this.filters.orderByDesc = undefined;
+    } else if (this.sortOption === 'reviewsDesc') {
+      this.filters.orderBy = undefined;
+      this.filters.orderByDesc = 'reviews';
     } else {
       this.filters.orderBy = 'id';
       this.filters.orderByDesc = undefined;

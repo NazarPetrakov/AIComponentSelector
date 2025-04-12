@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ComponentSelector.Application.Contracts;
+namespace ComponentSelector.Application.Contracts.User;
 
 public class LoginDto
 {
