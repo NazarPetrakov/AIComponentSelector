@@ -8,11 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -48,11 +49,12 @@ export class RegisterComponent {
   register() {
     if (this.registerForm.invalid) return;
 
-    const { username, email, age, password, confirmedPassword } =
+    const { username, email, age, country, password, confirmedPassword } =
       this.registerForm.value;
+    console.log(this.registerError);
 
     this.accountService
-      .register({ username, email, age, password, confirmedPassword })
+      .register({ username, email, age, country, password, confirmedPassword })
       .subscribe({
         next: (authUser) => {
           this.accountService.setCurrentUser(authUser);

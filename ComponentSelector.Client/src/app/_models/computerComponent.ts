@@ -6,5 +6,5 @@ export interface ComputerComponent {
   availability?: string;
   link?: string;
   imageUrl?: string;
-  reviews?: string;
+  reviews?: number;
 }

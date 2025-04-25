@@ -8,6 +8,6 @@ public class Component : BaseEntity
     public string? Availability { get; set; }
     public string? Link { get; set; }
     public string? ImageUrl { get; set; }
-    public string? Reviews { get; set; }
+    public int? Reviews { get; set; }
 
 }

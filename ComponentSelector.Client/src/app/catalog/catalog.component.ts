@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentQueryParams } from '../_models/queryParams/componentQueryParams';
 import { combineLatest, map } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [ComponentCardComponent, PaginationModule, FormsModule],
+  imports: [ComponentCardComponent, PaginationModule, FormsModule, TranslateModule],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css',
 })

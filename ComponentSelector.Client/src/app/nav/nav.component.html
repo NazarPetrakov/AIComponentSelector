@@ -5,7 +5,10 @@
     </a>
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
       <li class="nav-item">
-        <a class="nav-link" routerLink="ai-selector"><i class="bi bi-robot me-1"></i>AI-selecting</a>
+        <a class="nav-link" routerLink="ai-selector"
+          ><i class="bi bi-robot me-1"></i
+          >{{ "NAV.AI-SELECTOR" | translate }}</a
+        >
       </li>
       <li class="nav-item">
         <div class="btn-group" dropdown>
@@ -16,7 +19,7 @@
             class="btn btn-primary dropdown-toggle"
             aria-controls="dropdown-basic"
           >
-          <i class="bi bi-grid"></i> Catalog
+            <i class="bi bi-grid"></i> {{ "NAV.CATALOG" | translate }}
             <span class="caret"></span>
           </button>
           <ul
@@ -27,43 +30,49 @@
             aria-labelledby="button-basic"
           >
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/videocards"
-                >Відеокарти</a
-              >
+              <a class="dropdown-item" routerLink="/catalog/videocards">{{
+                "NAV.VIDEOCARDS" | translate
+              }}</a>
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/ssd">SSD</a>
+              <a class="dropdown-item" routerLink="/catalog/ssd">{{
+                "NAV.SSD" | translate
+              }}</a>
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/hdd">HDD</a>
+              <a class="dropdown-item" routerLink="/catalog/hdd">{{
+                "NAV.HDD" | translate
+              }}</a>
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/coolers"
-                >Системи охолодження</a
-              >
+              <a class="dropdown-item" routerLink="/catalog/coolers">{{
+                "NAV.COOLERS" | translate
+              }}</a>
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/memory"
-                >Оперативна пам'ять</a
-              >
+              <a class="dropdown-item" routerLink="/catalog/memory">{{
+                "NAV.RAM" | translate
+              }}</a>
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/motherboards"
-                >Материнські плати</a
-              >
+              <a class="dropdown-item" routerLink="/catalog/motherboards">{{
+                "NAV.MOTHERBOARDS" | translate
+              }}</a>
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/processors"
-                >Процесори</a
-              >
+              <a class="dropdown-item" routerLink="/catalog/processors">{{
+                "NAV.CPU" | translate
+              }}</a>
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/psu"
-                >Блоки живлення</a
-              >
+              <a class="dropdown-item" routerLink="/catalog/psu">{{
+                "NAV.PSU" | translate
+              }}</a>
             </li>
             <li role="menuitem">
-              <a class="dropdown-item" routerLink="/catalog/cases">Корпуси</a>
+              <a class="dropdown-item" routerLink="/catalog/cases">{{
+                "NAV.CASES" | translate
+              }}</a>
             </li>
           </ul>
         </div>
@@ -80,7 +89,7 @@
           aria-controls="dropdown-basic"
         >
           <i class="bi bi-person"></i>
-          Your profile
+          {{ "NAV.PROFILE" | translate }}
           <span class="caret"></span>
         </button>
         <ul
@@ -92,12 +101,14 @@
         >
           <li role="menuitem">
             <a class="dropdown-item" routerLink="/settings"
-              ><i class="bi bi-gear-fill me-1"></i>Settings</a
+              ><i class="bi bi-gear-fill me-1"></i
+              >{{ "NAV.SETTINGS" | translate }}</a
             >
           </li>
           <li role="menuitem">
             <a class="dropdown-item" style="cursor: pointer" (click)="logout()"
-              ><i class="bi bi-door-closed-fill me-1"></i>Logout</a
+              ><i class="bi bi-door-closed-fill me-1"></i
+              >{{ "NAV.LOGOUT" | translate }}</a
             >
           </li>
         </ul>
@@ -110,26 +121,55 @@
       <li class="nav-item">
         <a routerLink="/login" routerLinkActive="active" class="nav-link">
           <i class="bi bi-door-open"></i>
-          Log in
+          {{ "NAV.LOGIN" | translate }}
         </a>
       </li>
       }
     </ul>
 
     @if (accountService.currentUser()) {
+
     <form class="d-flex ms-2" (ngSubmit)="onSearch()">
       <input
         class="form-control me-sm-2"
         [(ngModel)]="term"
         name="search"
         type="search"
-        placeholder="Пошук..."
+        placeholder="{{ 'NAV.SEARCH' | translate }}..."
         aria-label="Search"
       />
       <button class="btn btn-secondary my-2 my-sm-0" type="submit">
-        Search
+        {{ "NAV.SEARCH" | translate }}
       </button>
     </form>
     }
+    <div class="btn-group ms-2" dropdown>
+      <button
+        id="language-dropdown"
+        dropdownToggle
+        type="button"
+        class="btn btn-outline-light dropdown-toggle"
+        aria-controls="language-menu"
+      >
+        <i class="bi bi-translate"></i>
+        {{ langService.currentLang().toUpperCase() }}
+      </button>
+      <ul
+        *dropdownMenu
+        class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="language-dropdown"
+      >
+        <li>
+          <button class="dropdown-item" (click)="switchLanguage('en')">
+            English
+          </button>
+        </li>
+        <li>
+          <button class="dropdown-item" (click)="switchLanguage('ua')">
+            Українська
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>

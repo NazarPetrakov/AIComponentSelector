@@ -10,12 +10,12 @@
   (ngSubmit)="applyFilters()"
 >
   <div class="d-flex align-items-center w-auto">
-    <label class="me-2 mb-0">Price:</label>
+    <label class="me-2 mb-0">{{ "CATALOG.PRICE" | translate }}:</label>
     <input
       type="number"
       step="100"
       class="form-control form-control-sm w-auto me-1"
-      placeholder="Min"
+      placeholder="{{ 'CATALOG.MIN' | translate }}."
       [(ngModel)]="filters.minPrice"
       name="minPrice"
     />
@@ -23,23 +23,25 @@
       type="number"
       step="1000"
       class="form-control form-control-sm w-auto"
-      placeholder="Max"
+      placeholder="{{ 'CATALOG.MAX' | translate }}."
       [(ngModel)]="filters.maxPrice"
       name="maxPrice"
     />
   </div>
-  <label class="me-2 mb-0">Ordering:</label>
+  <label class="me-2 mb-0">{{ "CATALOG.ORDER" | translate }}:</label>
   <select
     class="form-select w-auto"
     [(ngModel)]="sortOption"
     (ngModelChange)="onSortChange()"
     name="sortOption"
   >
-    <option value="default">Default</option>
-    <option value="price">Price Asc</option>
-    <option value="priceDesc">Price Desc</option>
-    <option value="reviews">Reviews Asc</option>
-    <option value="reviewsDesc">Reviews Desc</option>
+    <option value="default">{{ "CATALOG.DEFAULT" | translate }}</option>
+    <option value="price">{{ "CATALOG.PRICE_ASC" | translate }}</option>
+    <option value="priceDesc">{{ "CATALOG.PRICE_DESC" | translate }}</option>
+    <option value="reviews">{{ "CATALOG.REVIEWS_ASC" | translate }}</option>
+    <option value="reviewsDesc">
+      {{ "CATALOG.REVIEWS_DESC" | translate }}
+    </option>
   </select>
   <div class="form-check ms-2">
     <input
@@ -49,18 +51,20 @@
       [(ngModel)]="filters.availability"
       name="onlyAvailable"
     />
-    <label class="form-check-label mb-0" for="onlyAvailable"
-      >Only available</label
-    >
+    <label class="form-check-label mb-0" for="onlyAvailable">{{
+      "CATALOG.AVAILABILITY" | translate
+    }}</label>
   </div>
 
-  <button type="submit" class="btn btn-primary btn-sm ms-2">Apply</button>
+  <button type="submit" class="btn btn-primary btn-sm ms-2">
+    {{ "CATALOG.APPLY" | translate }}
+  </button>
   <button
     type="button"
     (click)="resetFilters()"
     class="btn btn-secondary btn-sm ms-2"
   >
-    Reset
+    {{ "CATALOG.RESET" | translate }}
   </button>
 </form>
 

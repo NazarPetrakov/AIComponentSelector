@@ -1,0 +1,112 @@
+{
+  "NAV": {
+    "CATALOG": "Catalog",
+    "AI-SELECTOR": "AI-selecting",
+    "PROFILE": "Your profile",
+    "SEARCH": "Search",
+    "VIDEOCARDS": "Videocards",
+    "HDD": "Hard drives",
+    "SSD": "SSD",
+    "COOLERS": "Cooling systems",
+    "RAM": "RAM",
+    "MOTHERBOARDS": "Motherboards",
+    "CPU": "Processors",
+    "PSU": "PSU",
+    "CASES": "Cases",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Log out",
+    "LOGIN": "Log in",
+    "EN": "en",
+    "UA": "ua"
+  },
+  "HOME": {
+    "TITLE": "PC Selection with Artificial Intelligence",
+    "SUBTITLE": "An innovative system for analyzing and selecting computer components",
+    "BUTTON_SEARCH": "Start Search",
+    "BUTTON_AI": "AI Selection",
+    "SMART_SEARCH_TITLE": "Smart Search",
+    "SMART_SEARCH_DESC": "Filter components by price, availability, category, and more",
+    "AI_TITLE": "Artificial Intelligence",
+    "AI_DESC": "Get recommendations based on your needs and budget",
+    "ACTUAL_PRICES_TITLE": "Actual Prices",
+    "ACTUAL_PRICES_DESC": "Component data with the latest updates",
+    "POPULAR_CATEGORIES": "Popular Categories",
+    "GO": "Go"
+  },
+  "CATALOG": {
+    "PRICE": "Price",
+    "MIN": "Min",
+    "MAX": "Max",
+    "ORDER": "Order by",
+    "DEFAULT": "Default",
+    "PRICE_ASC": "Price ASC",
+    "PRICE_DESC": "Price DESC",
+    "REVIEWS_ASC": "Reviews ASC",
+    "REVIEWS_DESC": "Reviews DESC",
+    "AVAILABILITY": "Only available",
+    "APPLY": "Apply",
+    "RESET": "Reset"
+  },
+  "SETTINGS": {
+    "SIDE": {
+      "USER_PROFILE": "User profile",
+      "CHANGE_PASSWORD": "Change password",
+      "CHANGE_EMAIL": "Change email",
+      "NOTIFICATION": "Notification settings",
+      "MY_BUILDS": "My PC builds",
+      "FILTERS": "Component selection filters",
+      "HISTORY": "View/Analysis History",
+      "EXPORT": "Export configurations",
+      "OTHER": "Other settings"
+    },
+    "PROFILE": {
+      "USERNAME": "Username",
+      "CREATED_AT": "Account created at",
+      "AGE": "Age",
+      "COUNTRY": "Country",
+      "LANGUAGE": "Interface language",
+      "ROLE": "Role",
+      "UPDATE": "Update profile",
+      "CHOOSE_LANGUAGE": "Choose language",
+      "SAVE": "Save",
+      "CANCEL": "Cancel"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT": "Current password",
+      "ENTER_CURRENT": "Enter current password",
+      "ENTER_NEW": "Enter new password",
+      "NEW": "New password",
+      "CHANGE": "Change"
+    },
+    "CHANGE_EMAIL": {
+      "CURRENT": "Current email",
+      "NEW": "New email",
+      "ENTER_NEW": "Enter new email",
+      "CHANGE": "Change"
+    }
+  },
+  "LOGIN": {
+    "LOGIN": "Login",
+    "USERNAME": "Username",
+    "ENTER_USERNAME": "Enter username",
+    "PASSWORD": "Password",
+    "ENTER_PASSWORD": "Enter password",
+    "TO_REGISTER": "Don't have an account?"
+  },
+  "REGISTER": {
+    "REGISTER": "Register",
+    "USERNAME": "Username",
+    "EMAIL": "Email",
+    "USERNAME_ENTER": "Enter username",
+    "EMAIL_ENTER": "Enter email",
+    "AGE_ENTER": "Enter your age",
+    "COUNTRY_ENTER": "Enter country",
+    "PASSWORD_ENTER": "Enter password",
+    "CONFIRM_PASSWORD_ENTER": "Enter confirm password",
+    "AGE": "Age",
+    "COUNTRY": "Country",
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "BACK": "Back to log in"
+  }
+}

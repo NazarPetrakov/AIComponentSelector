@@ -1,7 +1,8 @@
 <div class="card shadow-sm">
   <div class="card-body">
     <h5 class="card-title">
-      <i class="bi bi-person-circle me-2"></i>Профіль користувача
+      <i class="bi bi-person-circle me-2"></i
+      >{{ "SETTINGS.SIDE.USER_PROFILE" | translate }}
     </h5>
     <hr />
 
@@ -9,33 +10,33 @@
       <ng-container *ngIf="!isUpdating; else editForm">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            <strong>Ім'я користувача:</strong> {{ user.userName }}
+            <strong>{{ "SETTINGS.PROFILE.USERNAME" | translate }}:</strong> {{ user.userName }}
           </li>
           <li class="list-group-item">
-            <strong>Акаунт створений:</strong>
+            <strong>{{ "SETTINGS.PROFILE.CREATED_AT" | translate }}:</strong>
             {{ user.createdAt | date : "longDate" }}
           </li>
-          <li class="list-group-item"><strong>Вік:</strong> {{ user.age }}</li>
+          <li class="list-group-item"><strong>{{ "SETTINGS.PROFILE.AGE" | translate }}:</strong> {{ user.age }}</li>
           <li class="list-group-item">
-            <strong>Країна:</strong> {{ user.country }}
+            <strong>{{ "SETTINGS.PROFILE.COUNTRY" | translate }}:</strong> {{ user.country }}
           </li>
           <li class="list-group-item">
-            <strong>Мова інтерфейсу:</strong>
-            {{ selectedLanguage === "UA" ? "Українська" : "English" }}
+            <strong>{{ "SETTINGS.PROFILE.LANGUAGE" | translate }}:</strong>
+            {{ interfaceLanguage === "ua" ? "Українська" : "English" }}
           </li>
           <li class="list-group-item">
-            <strong>Роль:</strong> {{ user.role }}
+            <strong>{{ "SETTINGS.PROFILE.ROLE" | translate }}:</strong> {{ user.role }}
           </li>
         </ul>
         <button class="btn btn-primary ms-3 mt-2" (click)="startEditing()">
-          Update profile
+          {{ "SETTINGS.PROFILE.UPDATE" | translate }}
         </button>
       </ng-container>
 
       <ng-template #editForm>
         <form #profileForm="ngForm" (ngSubmit)="saveProfile()" novalidate>
           <div class="mb-3">
-            <label for="username" class="form-label">Ім'я користувача</label>
+            <label for="username" class="form-label">{{ "SETTINGS.PROFILE.USERNAME" | translate }}</label>
             <input
               type="text"
               id="username"
@@ -61,7 +62,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="age" class="form-label">Вік</label>
+            <label for="age" class="form-label">{{ "SETTINGS.PROFILE.AGE" | translate }}</label>
             <input
               type="number"
               id="age"
@@ -86,7 +87,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="country" class="form-label">Країна</label>
+            <label for="country" class="form-label">{{ "SETTINGS.PROFILE.COUNTRY" | translate }}</label>
             <input
               type="text"
               id="country"
@@ -108,17 +109,17 @@
           </div>
 
           <div class="mb-3">
-            <label for="language" class="form-label">Мова інтерфейсу</label>
+            <label for="language" class="form-label">{{ "SETTINGS.PROFILE.LANGUAGE" | translate }}</label>
             <select
               id="language"
               class="form-select"
-              [(ngModel)]="selectedLanguage"
+              [(ngModel)]="interfaceLanguage"
               name="language"
               #language="ngModel"
             >
-              <option value="" disabled>Оберіть мову</option>
-              <option value="UA">Українська</option>
-              <option value="EN">English</option>
+              <option value="" disabled>{{ "SETTINGS.PROFILE.CHOOSE_LANGUAGE" | translate }}</option>
+              <option value="ua">Українська</option>
+              <option value="en">English</option>
             </select>
           </div>
 
@@ -127,14 +128,14 @@
             class="btn btn-success me-2"
             [disabled]="profileForm.invalid"
           >
-            Save
+          {{ "SETTINGS.PROFILE.SAVE" | translate }}
           </button>
           <button
             type="button"
             class="btn btn-secondary"
             (click)="cancelEditing()"
           >
-            Cancel
+          {{ "SETTINGS.PROFILE.CANCEL" | translate }}
           </button>
         </form>
         <div *ngIf="profileError" class="alert alert-danger mt-3">

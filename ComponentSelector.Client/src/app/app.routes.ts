@@ -8,12 +8,14 @@ import { ProfileComponent } from './auth/settings/profile/profile.component';
 import { ChangePasswordComponent } from './auth/settings/change-password/change-password.component';
 import { ChangeEmailComponent } from './auth/settings/change-email/change-email.component';
 import { AiSelectingComponent } from './ai-selecting/ai-selecting.component';
+import { authGuard } from './_guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: '',
     runGuardsAndResolvers: 'always',
+    canActivate: [authGuard],
     children: [
       {
         path: 'settings',
@@ -25,11 +27,11 @@ export const routes: Routes = [
           { path: '', redirectTo: 'profile', pathMatch: 'full' },
         ],
       },
-      {
-        path: 'ai-selector',
-        component: AiSelectingComponent,
-      },
     ],
+  },
+  {
+    path: 'ai-selector',
+    component: AiSelectingComponent,
   },
   { path: 'catalog/search', component: CatalogComponent },
   { path: 'catalog/:category', component: CatalogComponent },
