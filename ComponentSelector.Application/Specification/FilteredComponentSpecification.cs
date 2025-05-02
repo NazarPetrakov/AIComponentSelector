@@ -78,7 +78,7 @@ public class FilteredComponentSpecification : ComponentSpecification
             _ => null
         };
     }
-    public static Expression<Func<Component, object>> GetSearchOrderByExpression(string searchTerm)
+    private static Expression<Func<Component, object>> GetSearchOrderByExpression(string searchTerm)
     {
         return c =>
         (c.Title != null && EF.Functions.Like(c.Title, searchTerm + "%")) ? 0 :

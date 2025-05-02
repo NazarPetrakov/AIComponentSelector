@@ -9,6 +9,8 @@ import { ChangePasswordComponent } from './auth/settings/change-password/change-
 import { ChangeEmailComponent } from './auth/settings/change-email/change-email.component';
 import { AiSelectingComponent } from './ai-selecting/ai-selecting.component';
 import { authGuard } from './_guards/auth.guard';
+import { ServerErrorComponent } from './error/server-error/server-error.component';
+import { NotFoundComponent } from './error/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,6 +35,8 @@ export const routes: Routes = [
     path: 'ai-selector',
     component: AiSelectingComponent,
   },
+  { path: 'server-error', component: ServerErrorComponent},
+  { path: 'not-found', component: NotFoundComponent},
   { path: 'catalog/search', component: CatalogComponent },
   { path: 'catalog/:category', component: CatalogComponent },
   { path: 'login', component: LoginComponent },

@@ -11,6 +11,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int,
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     public DbSet<Component> Components { get; set;}
+    public DbSet<Characteristic> Characteristics { get; set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

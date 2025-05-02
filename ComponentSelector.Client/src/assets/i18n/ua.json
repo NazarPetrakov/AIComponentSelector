@@ -106,5 +106,14 @@
     "PASSWORD": "Пароль",
     "CONFIRM_PASSWORD": "Пароль для підтвердження",
     "BACK": "Повернутися до входу"
+  },
+  "AI_PAGE": {
+    "PURPOSES": {
+      "OFFICE_WORK": "Офісна робота",
+      "GAMING": "Ігри",
+      "GRAPHIC_DESIGN": "Графічний дизайн",
+      "PROGRAMMING": "Програмування",
+      "VIDEO_EDITING": "Відеомонтаж"
+    }
   }
 }

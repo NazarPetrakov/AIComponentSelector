@@ -1,3 +1,4 @@
+using ComponentSelector.Application.Contracts;
 using ComponentSelector.Application.Helpers.Pagination;
 using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Domain.Entities;
@@ -9,4 +10,9 @@ public interface IComponentsRepository
 {
     Task<PagedList<Component>> GetComponentsAsync(ComponentQueryParams componentQueryParams,
         BaseSpecification<Component> baseSpecification);
+    Task<List<SimpleComponentDto>> GetSimpleComponentsAsync(
+        BaseSpecification<Component> spec);
+
+    Task<List<string>> GetComponentTitlesAsync(BaseSpecification<Component> spec);
+    Task<Component?> GetComponentByIdAsync(int id, BaseSpecification<Component>? spec);
 }

@@ -1,3 +1,4 @@
+using ComponentSelector.Application.Contracts;
 using ComponentSelector.Application.Helpers.Pagination;
 using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Application.IRepositories;
@@ -11,6 +12,15 @@ namespace ComponentSelector.Infrastructure.Repositories;
 
 public class ComponentsRepository(AppDbContext context) : IComponentsRepository
 {
+    public async Task<Component?> GetComponentByIdAsync(int id, BaseSpecification<Component>? spec)
+    {
+        var query = context.Components.AsNoTracking();
+
+        if (spec != null)
+            query = SpecificationQueryBuilder.GetQuery(query, spec);
+
+        return await query.FirstOrDefaultAsync(c => c.Id == id);
+    }
     public async Task<PagedList<Component>> GetComponentsAsync(
         ComponentQueryParams componentQueryParams, BaseSpecification<Component> spec)
     {
@@ -20,5 +30,23 @@ public class ComponentsRepository(AppDbContext context) : IComponentsRepository
 
         return await PagedList<Component>.PaginateAsync(query,
             componentQueryParams.PageNumber, componentQueryParams.PageSize);
+    }
+    public async Task<List<SimpleComponentDto>> GetSimpleComponentsAsync(
+        BaseSpecification<Component> spec)
+    {
+        var componentsQuery = context.Components.AsNoTracking();
+
+        var components = SpecificationQueryBuilder.GetQuery(componentsQuery, spec)
+            .Select(c => new SimpleComponentDto(c.Id, c.Title ?? ""));
+
+        return await components.ToListAsync();
+    }
+    public async Task<List<string>> GetComponentTitlesAsync(BaseSpecification<Component> spec)
+    {
+        var componentsQuery = context.Components.AsNoTracking();
+
+        return await SpecificationQueryBuilder.GetQuery(componentsQuery, spec)
+            .Select(c => c.Title ?? "")
+            .ToListAsync();
     }
 }

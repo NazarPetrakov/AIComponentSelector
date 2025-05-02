@@ -67,10 +67,14 @@
     {{ "CATALOG.RESET" | translate }}
   </button>
 </form>
-
-@for (item of componentsService.paginatedResult()?.items; track item.id) {
-<app-component-card [component]="item"></app-component-card>
-} @if ((componentsService.paginatedResult()?.pagination?.totalItems || 0) > 0) {
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    @for (item of componentsService.paginatedResult()?.items; track item.id) {
+      <div class="col">
+        <app-component-card [component]="item"></app-component-card>
+      </div>
+    }
+  </div>
+@if ((componentsService.paginatedResult()?.pagination?.totalItems || 0) > 0) {
 <div class="d-flex justify-content-center my-4">
   <pagination
     [totalItems]="(componentsService.paginatedResult()?.pagination)!.totalItems"

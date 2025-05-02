@@ -11,6 +11,8 @@ public class AppMappingProfile : Profile
     {
         CreateMap<RegisterDto, AppUser>();
         CreateMap<Component, ComponentDto>();
+        CreateMap<Component, ComponentWithCharacteristicsDto>();
+        CreateMap<Characteristic, CharacteristicDto>();
         CreateMap<AppUser, UserDto>();
     }
 }

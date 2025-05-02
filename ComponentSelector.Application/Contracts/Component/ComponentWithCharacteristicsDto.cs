@@ -1,8 +1,8 @@
-using System.Collections.ObjectModel;
+using ComponentSelector.Domain.Entities;
 
-namespace ComponentSelector.Domain.Entities;
+namespace ComponentSelector.Application.Contracts;
 
-public class Component : BaseEntity
+public class ComponentWithCharacteristicsDto : BaseEntity
 {
     public string? Category { get; set; }
     public string? Title { get; set; }
@@ -11,7 +11,5 @@ public class Component : BaseEntity
     public string? Link { get; set; }
     public string? ImageUrl { get; set; }
     public int? Reviews { get; set; }
-
-    public List<Characteristic> Characteristics{ get; set; } = [];
-
+    public List<CharacteristicDto> Characteristics { get; set; } = [];
 }

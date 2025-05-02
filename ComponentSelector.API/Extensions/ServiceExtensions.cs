@@ -23,10 +23,14 @@ public static class ServiceExtensions
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddScoped<IComponentsRepository, ComponentsRepository>();
         services.AddScoped<IComponentsService, ComponentsService>();
+        services.AddScoped<ICharacteristicsRepository, CharacteristicsRepository>();
+        services.AddScoped<ICharacteristicsService, CharacteristicsService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IOpenAIService, OpenAIService>();
+        services.AddScoped<IBuildService, BuildService>();
 
 
         return services;

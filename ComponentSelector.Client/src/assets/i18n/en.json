@@ -108,5 +108,14 @@
     "PASSWORD": "Password",
     "CONFIRM_PASSWORD": "Confirm password",
     "BACK": "Back to log in"
+  },
+  "AI_PAGE": {
+    "PURPOSES": {
+      "OFFICE_WORK": "Office Work",
+      "GAMING": "Gaming",
+      "GRAPHIC_DESIGN": "Graphic Design",
+      "PROGRAMMING": "Programming",
+      "VIDEO_EDITING": "Video Editing"
+    }
   }
 }

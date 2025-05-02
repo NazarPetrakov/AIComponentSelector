@@ -14,3 +14,10 @@ public class ComponentSpecification : BaseSpecification<Component>
     {
     }
 }
+public class ComponentWithCharacteristicsSpecification : BaseSpecification<Component>
+{
+    public ComponentWithCharacteristicsSpecification()
+    {
+        AddInclude(c => c.Characteristics);
+    }
+}

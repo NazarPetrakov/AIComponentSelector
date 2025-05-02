@@ -1,14 +1,43 @@
 @if (component()) {
-<div class="card">
+<div class="card shadow-sm mb-4 border-primary" style="max-width: 320px">
   <img
     [src]="component().imageUrl"
-    alt="image"
-    style="height: 150px; width: 150px"
+    alt="{{ component().title }}"
+    class="card-img-top img-fluid mx-auto mt-3"
+    style="max-height: 160px; object-fit: contain; width: auto"
   />
-  <h6>{{ component().title }}</h6>
-  <p>{{ component().category }}</p>
-  <p>Ціна: {{ component().price }} грн</p>
-  <p>Кількість коментарів: {{ component().reviews }}</p>
-  <a href="{{ component().link }}">Url: {{ component().link }}</a>
+  <div class="card-body">
+    <h6
+      class="card-title text-primary fw-semibold"
+      style="
+        display: -webkit-box;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 3em;
+        line-height: 1.5em;
+      "
+    >
+      {{ component().title }}
+    </h6>
+    <p class="card-text mb-1">
+      <strong>Категорія:</strong> {{ component().category }}
+    </p>
+    <p class="card-text mb-1">
+      <strong>Ціна:</strong> {{ component().price | number : "1.0-2" }} грн
+    </p>
+    <p class="card-text mb-2">
+      <strong>Коментарі:</strong> {{ component().reviews }}
+    </p>
+    <a
+      class="btn btn-outline-primary btn-sm"
+      href="{{ component().link }}"
+      target="_blank"
+    >
+      Переглянути на сайті
+    </a>
+  </div>
 </div>
 }
