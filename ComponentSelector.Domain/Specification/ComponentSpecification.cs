@@ -20,4 +20,9 @@ public class ComponentWithCharacteristicsSpecification : BaseSpecification<Compo
     {
         AddInclude(c => c.Characteristics);
     }
+    public ComponentWithCharacteristicsSpecification(Expression<Func<Component, bool>> criteria)
+        : base(criteria)
+    {
+        AddInclude(c => c.Characteristics);
+    }
 }

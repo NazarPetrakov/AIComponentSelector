@@ -21,7 +21,7 @@ public class ComponentsRepository(AppDbContext context) : IComponentsRepository
 
         return await query.FirstOrDefaultAsync(c => c.Id == id);
     }
-    public async Task<PagedList<Component>> GetComponentsAsync(
+    public async Task<PagedList<Component>> GetPagedComponentsAsync(
         ComponentQueryParams componentQueryParams, BaseSpecification<Component> spec)
     {
         var query = context.Components.AsNoTracking();
@@ -30,6 +30,12 @@ public class ComponentsRepository(AppDbContext context) : IComponentsRepository
 
         return await PagedList<Component>.PaginateAsync(query,
             componentQueryParams.PageNumber, componentQueryParams.PageSize);
+    }
+    public IQueryable<Component> GetComponentsQuery(BaseSpecification<Component> spec)
+    {
+        var query = context.Components.AsNoTracking();
+
+        return SpecificationQueryBuilder.GetQuery(query, spec);
     }
     public async Task<List<SimpleComponentDto>> GetSimpleComponentsAsync(
         BaseSpecification<Component> spec)

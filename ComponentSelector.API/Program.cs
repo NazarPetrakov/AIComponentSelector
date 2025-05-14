@@ -1,3 +1,4 @@
+using Betalgo.Ranul.OpenAI.Interfaces;
 using ComponentSelector.API.Extensions;
 using ComponentSelector.Domain.Entities;
 using ComponentSelector.Infrastructure.Data;

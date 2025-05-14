@@ -3,7 +3,7 @@ namespace ComponentSelector.Application.Contracts.Build;
 public class ChatBuildResponse
 {
     public ChatBuild? Build { get; set; }
-    public decimal TotalPrice { get; set; }
+    public double TotalPrice { get; set; }
     public Compatibility? Compatibility { get; set; }
 }
 public class ChatBuild

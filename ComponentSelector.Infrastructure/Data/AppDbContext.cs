@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ComponentSelector.Infrastructure.Data;
 
-public class AppDbContext : IdentityDbContext<AppUser, AppRole, int, 
-    IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, 
+public class AppDbContext : IdentityDbContext<AppUser, AppRole, int,
+    IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
     IdentityRoleClaim<int>, IdentityUserToken<int>>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-    public DbSet<Component> Components { get; set;}
-    public DbSet<Characteristic> Characteristics { get; set;}
+    public DbSet<Component> Components { get; set; }
+    public DbSet<Characteristic> Characteristics { get; set; }
+    public DbSet<Build> Builds { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -27,5 +28,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int,
             .WithOne(ur => ur.User)
             .HasForeignKey(ur => ur.UserId)
             .IsRequired();
+
+        builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 }

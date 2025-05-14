@@ -1,30 +1,34 @@
 @if (accountService.currentUser()) {
 <div class="container my-4">
   <div class="card shadow-lg p-4 bg-light border-primary">
-    <h3 class="text-primary mb-4">Генерація ПК конфігурації за допомогою ШІ</h3>
+    <h3 class="text-primary mb-4">{{ "AI_PAGE.MAIN.TITLE" | translate }}</h3>
 
     <form (ngSubmit)="generateBuild()">
       <div class="row g-3 mb-3">
         <div class="col-md-4">
-          <label class="form-label">Бюджет</label>
+          <label class="form-label">{{
+            "AI_PAGE.MAIN.BUDGET" | translate
+          }}</label>
           <div class="input-group">
             <input
               type="number"
               [(ngModel)]="price"
               name="price"
               required
-              placeholder="Введіть бюджет"
+              placeholder="{{ 'AI_PAGE.MAIN.ENTER_BUDGET' | translate }}"
               class="form-control"
             />
             <select class="form-select" [(ngModel)]="currency" name="currency">
-              <option value="UAH">₴ (грн)</option>
-              <option value="USD">$ (дол)</option>
+              <option value="UAH">₴</option>
+              <option value="USD">$</option>
             </select>
           </div>
         </div>
 
         <div class="col-md-4">
-          <label class="form-label">Призначення ПК</label>
+          <label class="form-label">{{
+            "AI_PAGE.MAIN.PC_PURPOSE" | translate
+          }}</label>
           <select
             class="form-select"
             [(ngModel)]="purpose"
@@ -37,13 +41,15 @@
           </select>
         </div>
         <div class="col-md-9">
-          <label class="form-label">Додаткова інформація</label>
+          <label class="form-label">{{
+            "AI_PAGE.MAIN.MORE_INFO" | translate
+          }}</label>
           <textarea
             class="form-control"
             rows="3"
             [(ngModel)]="description"
             name="description"
-            placeholder="Наприклад, бажані ігри, стиль корпусу, RGB-підсвітка тощо"
+            placeholder="{{ 'AI_PAGE.MAIN.MORE_INFO_PLACEHOLDER' | translate }}"
           ></textarea>
         </div>
         <div class="col-md-4 d-flex align-items-end">
@@ -52,7 +58,7 @@
             type="submit"
             [disabled]="loading"
           >
-            Згенерувати
+            {{ "AI_PAGE.MAIN.GENERATE" | translate }}
           </button>
         </div>
       </div>
@@ -60,34 +66,194 @@
 
     <div *ngIf="loading" class="text-center my-4">
       <div class="spinner-border text-primary" role="status"></div>
-      <div>Please wait</div>
+      <div>{{ "AI_PAGE.MAIN.GENERATE_WAIT" | translate }}</div>
     </div>
 
     <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
     <div *ngIf="build">
-      <h4 class="text-success mt-4">Знайдено конфігурацію:</h4>
-      <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
-        <div class="col" *ngFor="let comp of componentList()">
-          <app-component-card [component]="comp.data"></app-component-card>
-          <p *ngIf="comp.compatibility" class="text-muted small mt-2">
-            <strong>Сумісність:</strong> {{ comp.compatibility }}
-          </p>
-        </div>
-      </div>
+      <h4 class="text-success mt-4">
+        {{ "AI_PAGE.MAIN.AI_FOUND_CONFIG" | translate }}:
+      </h4>
+      <app-build-card
+        [title]="'CPU: ' + build.chatBuildResponse.build.cpu.title"
+        [price]="build.chatBuildResponse.build.cpu.price"
+        [characteristics]="build.chatBuildResponse.build.cpu.characteristics"
+        [compatibility]="build.compatibility.cpu"
+      ></app-build-card>
+
+      <app-build-card
+        [title]="'GPU: ' + build.chatBuildResponse.build.gpu.title"
+        [price]="build.chatBuildResponse.build.gpu.price"
+        [characteristics]="build.chatBuildResponse.build.gpu.characteristics"
+        [compatibility]="build.compatibility.gpu"
+      ></app-build-card>
+
+      <app-build-card
+        [title]="
+          'Motherboard: ' + build.chatBuildResponse.build.motherboard.title
+        "
+        [price]="build.chatBuildResponse.build.motherboard.price"
+        [characteristics]="
+          build.chatBuildResponse.build.motherboard.characteristics
+        "
+        [compatibility]="build.compatibility.motherboard"
+      ></app-build-card>
+
+      <app-build-card
+        [title]="'Case: ' + build.chatBuildResponse.build.case.title"
+        [price]="build.chatBuildResponse.build.case.price"
+        [characteristics]="build.chatBuildResponse.build.case.characteristics"
+        [compatibility]="build.compatibility.case"
+      ></app-build-card>
+
+      <app-build-card
+        [title]="'PSU: ' + build.chatBuildResponse.build.psu.title"
+        [price]="build.chatBuildResponse.build.psu.price"
+        [characteristics]="build.chatBuildResponse.build.psu.characteristics"
+        [compatibility]="build.compatibility.psu"
+      ></app-build-card>
+
+      <app-build-card
+        [title]="'RAM: ' + build.chatBuildResponse.build.ram.title"
+        [price]="build.chatBuildResponse.build.ram.price"
+        [characteristics]="build.chatBuildResponse.build.ram.characteristics"
+        [compatibility]="build.compatibility.ram"
+      ></app-build-card>
+
+      <app-build-card
+        [title]="'Storage: ' + build.chatBuildResponse.build.storage.title"
+        [price]="build.chatBuildResponse.build.storage.price"
+        [characteristics]="
+          build.chatBuildResponse.build.storage.characteristics
+        "
+      ></app-build-card>
 
       <div
         class="mt-4 p-3 bg-success bg-opacity-10 border border-success rounded"
       >
-        <h5>Загальна вартість: {{ build.totalPrice | number }} грн</h5>
+        <h5>
+          {{ "AI_PAGE.MAIN.TOTAL_COST" | translate }}:
+          {{ build.totalPrice | number }} $
+        </h5>
         <p class="mb-0">
-          Усі компоненти підібрані так, щоб забезпечити сумісність та найкращу
-          продуктивність для вашого призначення.
+          {{ "AI_PAGE.MAIN.RESULT_TITLE" | translate }}
         </p>
+      </div>
+
+      <h4 class="text-success mt-4">
+        {{ "AI_PAGE.MAIN.FOUND_CONFIG" | translate }}:
+      </h4>
+      <div class="row row-cols-1 row-cols-md-3 g-4 mb-1">
+        <div class="col" *ngFor="let comp of componentList()">
+          @if(comp.data){
+          <app-component-card [component]="comp.data"></app-component-card>
+          }@else {
+          <div class="container">{{ comp.category }}</div>
+          }
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<button
+  class="btn btn-primary rounded-circle chat-button"
+  (click)="toggleChat()"
+  title="Підтримка ШІ"
+>
+  <i class="bi bi-patch-question-fill"></i>
+</button>
+
+<div class="chat-window card shadow" *ngIf="chatOpen">
+  <div
+    class="card-header d-flex justify-content-between align-items-center bg-primary text-white"
+  >
+    <strong>{{ "AI_PAGE.DIALOG.ASSISTANT_TITLE" | translate }}</strong>
+    <button class="btn-close" (click)="toggleChat()"></button>
+  </div>
+
+  <div class="card-body chat-body" #chatBody>
+    <div *ngFor="let msg of chatService.messages()" class="mb-2">
+      <div
+        class="d-flex"
+        [ngClass]="{
+          'justify-content-start': msg.role === 'assistant',
+          'justify-content-end': msg.role === 'user'
+        }"
+      >
+        <div
+          class="p-2 rounded"
+          [ngClass]="{
+            'bg-light text-dark': msg.role === 'assistant',
+            'bg-primary text-white': msg.role === 'user'
+          }"
+          style="max-width: 75%; white-space: pre-wrap"
+        >
+          <strong *ngIf="msg.role === 'assistant'">
+            <i class="bi bi-robot pe-2 text-success"></i></strong
+          ><strong *ngIf="msg.role === 'user'">
+            <i class="bi bi-person pe-1"></i></strong
+          >{{ msg.message }}
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="dialogLoading" class="text-center mt-3">
+      <div
+        class="spinner-grow ms-1"
+        style="width: 0.7rem; height: 0.7rem"
+        role="status"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div
+        class="spinner-grow ms-1"
+        style="width: 0.7rem; height: 0.7rem"
+        role="status"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div
+        class="spinner-grow ms-1"
+        style="width: 0.7rem; height: 0.7rem"
+        role="status"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="small text-muted">
+        <strong><i class="bi bi-robot pe-2 text-success"></i></strong>
+        {{ "AI_PAGE.DIALOG.TYPING" | translate }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer d-flex">
+    <input
+      type="text"
+      [(ngModel)]="userMessage"
+      class="form-control me-2"
+      (keydown.enter)="sendMessage()"
+      placeholder="{{ 'AI_PAGE.DIALOG.MESSAGE_PLACEHOLDER' | translate }}..."
+      [disabled]="loading"
+    />
+    <button
+      class="btn btn-success"
+      (click)="sendMessage()"
+      [disabled]="loading"
+    >
+      {{ "AI_PAGE.DIALOG.SEND" | translate }}
+    </button>
+    <button
+      class="btn btn-primary ms-1"
+      (click)="clearChatHistory()"
+      tooltip="Clear chat history"
+      placement="auto"
+    >
+      <i class="bi bi-trash3"></i>
+    </button>
+  </div>
+</div>
 }@else {
-<h2>Please register first</h2>
+<h2>{{ "AI_PAGE.MAIN.REGISTER_FIRST" | translate }}</h2>
 }

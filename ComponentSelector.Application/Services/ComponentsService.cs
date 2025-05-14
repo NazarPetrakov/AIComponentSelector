@@ -6,11 +6,13 @@ using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Application.IRepositories;
 using ComponentSelector.Application.IServices;
 using ComponentSelector.Application.Specification;
+using ComponentSelector.Domain.Entities;
 using ComponentSelector.Domain.Enums;
 using ComponentSelector.Domain.Exceptions;
 using ComponentSelector.Domain.Specification;
 using FuzzySharp;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComponentSelector.Application.Services;
 
@@ -28,7 +30,7 @@ public class ComponentsService(IComponentsRepository componentsRepository,
         HttpResponse httpResponse, ComponentQueryParams componentQueryParams)
     {
         var specification = new FilteredComponentSpecification(componentQueryParams);
-        var components = await componentsRepository.GetComponentsAsync(componentQueryParams,
+        var components = await componentsRepository.GetPagedComponentsAsync(componentQueryParams,
            specification);
 
         httpResponse.AddPaginationHeader(components);
@@ -75,7 +77,7 @@ public class ComponentsService(IComponentsRepository componentsRepository,
 
         return results;
     }
-    
+
     public async Task<ComponentDto> FindComponentByTitleAsync(CategoryEnum category, string title)
     {
         var scoredComponents = await FindTopComponentsWithScoreAsync(category, title, 10);
@@ -89,5 +91,35 @@ public class ComponentsService(IComponentsRepository componentsRepository,
         }
 
         return new ComponentDto();
+    }
+    public async Task<ComponentDto?> FindComponentByCharacteristicsAsync(CategoryEnum category,
+        List<CharacteristicDto> chatCharacteristics)
+    {
+        BaseSpecification<Component> spec = new ComponentWithCharacteristicsSpecification();
+        if (category == CategoryEnum.Videocards)
+        {
+            string chatGpuBrand = chatCharacteristics.FirstOrDefault(c => c.AttributeName == "brand")
+                ?.AttributeValue.ToLower() ?? "";
+            string chatGpuChip = chatCharacteristics.FirstOrDefault(c => c.AttributeName == "chip")
+                ?.AttributeValue.ToLower() ?? "";
+            spec = new ComponentWithCharacteristicsSpecification(c =>
+                c.Characteristics.Any(ch => ch.AttributeName.ToLower() == "графічний чип"
+                    && ch.AttributeValue.ToLower() == chatGpuChip) && (c.Title ?? "").Contains(chatGpuBrand));
+        }
+        var component = await componentsRepository.GetComponentsQuery(spec).FirstOrDefaultAsync();
+
+        return mapper.Map<ComponentDto>(component);
+
+        // var scoredComponents = await FindTopComponentsWithScoreAsync(category, title, 10);
+        // var bestMatch = scoredComponents.MaxBy(x => x.Score);
+
+        // if (bestMatch != null)
+        // {
+        //     var result = await componentsRepository.GetComponentByIdAsync(bestMatch.SimpleComponent.Id, null)
+        //         ?? throw new ItemNotFoundException($"Component with id: {bestMatch.SimpleComponent.Id} not found.");
+        //     return mapper.Map<ComponentDto>(result);
+        // }
+
+        // return new ComponentDto();
     }
 }

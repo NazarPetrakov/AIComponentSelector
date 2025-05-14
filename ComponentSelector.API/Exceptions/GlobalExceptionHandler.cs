@@ -25,6 +25,9 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger, IHo
         }
         switch (exception)
         {
+            case ItemNotFoundException:
+                errorResponse.Status = (int)HttpStatusCode.NotFound;
+                break;
             case BadHttpRequestException:
             case ConflictException:
             case IdentityException:

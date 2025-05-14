@@ -5,6 +5,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LangService } from '../_services/lang.service';
+import { ChatService } from '../_services/chat.service';
 
 @Component({
   selector: 'app-nav',
@@ -22,6 +23,7 @@ import { LangService } from '../_services/lang.service';
 })
 export class NavComponent {
   private router = inject(Router);
+  private chatService = inject(ChatService);
   langService = inject(LangService);
 
   accountService = inject(AccountService);
@@ -37,6 +39,9 @@ export class NavComponent {
   }
   logout() {
     this.accountService.logout();
+    this.chatService.messages.update((messages) => {
+      return null;
+    });
     this.router.navigateByUrl('/login');
   }
   onSearch() {

@@ -14,4 +14,6 @@ public interface IComponentsService
         (CategoryEnum category, string searchName, int limit);
     Task<ComponentWithCharacteristicsDto> GetComponentByIdAsync(int id);
     Task<ComponentDto> FindComponentByTitleAsync(CategoryEnum category, string title);
+    Task<ComponentDto?> FindComponentByCharacteristicsAsync(CategoryEnum category,
+        List<CharacteristicDto> charCharacteristics);
 }

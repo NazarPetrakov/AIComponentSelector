@@ -7,5 +7,7 @@ public class AppUser : IdentityUser<int>
     public int Age { get; set; }
     public string? Country { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string? ChatThreadId { get; set; }
     public ICollection<AppUserRole> UserRoles { get; set; } = [];
+    public ICollection<Build> Builds { get; set; } = [];
 }

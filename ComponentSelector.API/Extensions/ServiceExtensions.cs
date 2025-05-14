@@ -1,7 +1,9 @@
+using Betalgo.Ranul.OpenAI.Extensions;
 using ComponentSelector.API.Exceptions;
 using ComponentSelector.Application.IRepositories;
 using ComponentSelector.Application.IServices;
 using ComponentSelector.Application.Services;
+using ComponentSelector.Domain.Exceptions;
 using ComponentSelector.Infrastructure.Data;
 using ComponentSelector.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +31,14 @@ public static class ServiceExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IOpenAIService, OpenAIService>();
+        services.AddScoped<IAppOpenAIService, AppOpenAIService>();
         services.AddScoped<IBuildService, BuildService>();
+        services.AddOpenAIService(settings =>
+        {
+            settings.ApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                ?? throw new ItemNotFoundException("API key not found in environment variables");
+            settings.UseBeta = true;
+        });
 
 
         return services;

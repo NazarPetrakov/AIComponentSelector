@@ -24,4 +24,10 @@ public class ComponentsController(IComponentsService componentsService) : BaseAp
     public async Task<List<ComponentWithScoreDto>> GetTopComponents(
         [FromQuery] CategoryEnum category, [FromQuery] string searchTitle, int limit) =>
             await componentsService.FindTopComponentsWithScoreAsync(category, searchTitle, limit);
+    [HttpPost("test")]
+    public async Task<ComponentDto?> Test(
+        [FromQuery] CategoryEnum category, [FromBody] List<CharacteristicDto> characteristics)
+    {
+        return await componentsService.FindComponentByCharacteristicsAsync(category, characteristics);
+    }
 }

@@ -4,6 +4,7 @@ using ComponentSelector.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComponentSelector.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250506172337_AddChatThreadIdToAppUser")]
+    partial class AddChatThreadIdToAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,62 +148,6 @@ namespace ComponentSelector.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("ComponentSelector.Domain.Entities.Build", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CPUId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CaseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GPUId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MotherboardId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PSUId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RAMId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StorageId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CPUId");
-
-                    b.HasIndex("CaseId");
-
-                    b.HasIndex("GPUId");
-
-                    b.HasIndex("MotherboardId");
-
-                    b.HasIndex("PSUId");
-
-                    b.HasIndex("RAMId");
-
-                    b.HasIndex("StorageId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Builds");
                 });
 
             modelBuilder.Entity("ComponentSelector.Domain.Entities.Characteristic", b =>
@@ -370,66 +317,6 @@ namespace ComponentSelector.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ComponentSelector.Domain.Entities.Build", b =>
-                {
-                    b.HasOne("ComponentSelector.Domain.Entities.Component", "CPU")
-                        .WithMany()
-                        .HasForeignKey("CPUId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("ComponentSelector.Domain.Entities.Component", "Case")
-                        .WithMany()
-                        .HasForeignKey("CaseId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("ComponentSelector.Domain.Entities.Component", "GPU")
-                        .WithMany()
-                        .HasForeignKey("GPUId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("ComponentSelector.Domain.Entities.Component", "Motherboard")
-                        .WithMany()
-                        .HasForeignKey("MotherboardId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("ComponentSelector.Domain.Entities.Component", "PSU")
-                        .WithMany()
-                        .HasForeignKey("PSUId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("ComponentSelector.Domain.Entities.Component", "RAM")
-                        .WithMany()
-                        .HasForeignKey("RAMId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("ComponentSelector.Domain.Entities.Component", "Storage")
-                        .WithMany()
-                        .HasForeignKey("StorageId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("ComponentSelector.Domain.Entities.AppUser", "User")
-                        .WithMany("Builds")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CPU");
-
-                    b.Navigation("Case");
-
-                    b.Navigation("GPU");
-
-                    b.Navigation("Motherboard");
-
-                    b.Navigation("PSU");
-
-                    b.Navigation("RAM");
-
-                    b.Navigation("Storage");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ComponentSelector.Domain.Entities.Characteristic", b =>
                 {
                     b.HasOne("ComponentSelector.Domain.Entities.Component", "Component")
@@ -484,8 +371,6 @@ namespace ComponentSelector.Infrastructure.Migrations
 
             modelBuilder.Entity("ComponentSelector.Domain.Entities.AppUser", b =>
                 {
-                    b.Navigation("Builds");
-
                     b.Navigation("UserRoles");
                 });
 
