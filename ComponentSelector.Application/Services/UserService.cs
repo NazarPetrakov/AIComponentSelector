@@ -1,8 +1,10 @@
+using ComponentSelector.Application.Contracts.Admin;
 using ComponentSelector.Application.Contracts.User;
 using ComponentSelector.Application.IRepositories;
 using ComponentSelector.Application.IServices;
 using ComponentSelector.Domain.Entities;
 using ComponentSelector.Domain.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace ComponentSelector.Application.Services;
@@ -24,6 +26,14 @@ public class UserService(UserManager<AppUser> userManager, IUsersRepository user
             ?? throw new ItemNotFoundException("User not found");
 
         return user?.ChatThreadId;
+    }
+
+    public async Task<AppUser> GetUserByIdAsync(string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId)
+            ?? throw new ItemNotFoundException($"User with id: {userId} not found.");
+
+        return user;
     }
 
     public async Task UpdateChatThreadIdAsync(string userId, string threadId)
@@ -52,5 +62,21 @@ public class UserService(UserManager<AppUser> userManager, IUsersRepository user
         var isSuccessful = await usersRepository.SaveChangesAsync();
         if (!isSuccessful)
             throw new InvalidOperationException("Failed to save changes to the user.");
+    }
+    public async Task ChangeUserRoleAsync(ChangeRoleRequest changeRoleRequest)
+    {
+        var user = await userManager.FindByNameAsync(changeRoleRequest.UserName) ??
+            throw new BadHttpRequestException($"No user with username: {changeRoleRequest.UserName}"); ;
+
+        var currentRoles = await userManager.GetRolesAsync(user);
+        var removeResult = await userManager.RemoveFromRolesAsync(user, currentRoles);
+
+        if (!removeResult.Succeeded)
+            throw new IdentityException(removeResult);
+
+        var addResult = await userManager.AddToRoleAsync(user, changeRoleRequest.NewRole);
+
+        if (!addResult.Succeeded)
+            throw new IdentityException(addResult);
     }
 }

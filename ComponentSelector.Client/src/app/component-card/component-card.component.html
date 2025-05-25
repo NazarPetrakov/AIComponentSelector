@@ -2,6 +2,7 @@
 <div class="card shadow-sm mb-4 border-primary" style="max-width: 320px">
   <img
     [src]="component().imageUrl"
+    (error)="onImageError($event)"
     alt="{{ component().title }}"
     class="card-img-top img-fluid mx-auto mt-3"
     style="max-height: 160px; object-fit: contain; width: auto"
@@ -23,20 +24,23 @@
       {{ component().title }}
     </h6>
     <p class="card-text mb-1">
-      <strong>Категорія:</strong> {{ component().category }}
+      <strong>{{ "COMPONENT.CARD.CATEGORY" | translate }}:</strong>
+      {{ component().category }}
     </p>
     <p class="card-text mb-1">
-      <strong>Ціна:</strong> {{ component().price | number : "1.0-2" }} грн
+      <strong>{{ "COMPONENT.CARD.PRICE" | translate }}:</strong>
+      {{ component().price | number : "1.0-2" }} {{ "COMPONENT.CARD.HRN" | translate }}
     </p>
     <p class="card-text mb-2">
-      <strong>Коментарі:</strong> {{ component().reviews }}
+      <strong>{{ "COMPONENT.CARD.COMMENTS" | translate }}:</strong>
+      {{ component().reviews }}
     </p>
     <a
       class="btn btn-outline-primary btn-sm"
       href="{{ component().link }}"
       target="_blank"
     >
-      Переглянути на сайті
+      {{ "COMPONENT.CARD.CHECK" | translate }}
     </a>
   </div>
 </div>

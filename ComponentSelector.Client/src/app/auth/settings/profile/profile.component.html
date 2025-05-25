@@ -10,22 +10,28 @@
       <ng-container *ngIf="!isUpdating; else editForm">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            <strong>{{ "SETTINGS.PROFILE.USERNAME" | translate }}:</strong> {{ user.userName }}
+            <strong>{{ "SETTINGS.PROFILE.USERNAME" | translate }}:</strong>
+            {{ user.userName }}
           </li>
           <li class="list-group-item">
             <strong>{{ "SETTINGS.PROFILE.CREATED_AT" | translate }}:</strong>
             {{ user.createdAt | date : "longDate" }}
           </li>
-          <li class="list-group-item"><strong>{{ "SETTINGS.PROFILE.AGE" | translate }}:</strong> {{ user.age }}</li>
           <li class="list-group-item">
-            <strong>{{ "SETTINGS.PROFILE.COUNTRY" | translate }}:</strong> {{ user.country }}
+            <strong>{{ "SETTINGS.PROFILE.AGE" | translate }}:</strong>
+            {{ user.age }}
+          </li>
+          <li class="list-group-item">
+            <strong>{{ "SETTINGS.PROFILE.COUNTRY" | translate }}:</strong>
+            {{ user.country }}
           </li>
           <li class="list-group-item">
             <strong>{{ "SETTINGS.PROFILE.LANGUAGE" | translate }}:</strong>
             {{ interfaceLanguage === "ua" ? "Українська" : "English" }}
           </li>
           <li class="list-group-item">
-            <strong>{{ "SETTINGS.PROFILE.ROLE" | translate }}:</strong> {{ user.role }}
+            <strong>{{ "SETTINGS.PROFILE.ROLE" | translate }}:</strong>
+            {{ user.role ?? "SETTINGS.PROFILE.NO" | translate }}
           </li>
         </ul>
         <button class="btn btn-primary ms-3 mt-2" (click)="startEditing()">
@@ -36,7 +42,9 @@
       <ng-template #editForm>
         <form #profileForm="ngForm" (ngSubmit)="saveProfile()" novalidate>
           <div class="mb-3">
-            <label for="username" class="form-label">{{ "SETTINGS.PROFILE.USERNAME" | translate }}</label>
+            <label for="username" class="form-label">{{
+              "SETTINGS.PROFILE.USERNAME" | translate
+            }}</label>
             <input
               type="text"
               id="username"
@@ -62,7 +70,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="age" class="form-label">{{ "SETTINGS.PROFILE.AGE" | translate }}</label>
+            <label for="age" class="form-label">{{
+              "SETTINGS.PROFILE.AGE" | translate
+            }}</label>
             <input
               type="number"
               id="age"
@@ -87,7 +97,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="country" class="form-label">{{ "SETTINGS.PROFILE.COUNTRY" | translate }}</label>
+            <label for="country" class="form-label">{{
+              "SETTINGS.PROFILE.COUNTRY" | translate
+            }}</label>
             <input
               type="text"
               id="country"
@@ -109,7 +121,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="language" class="form-label">{{ "SETTINGS.PROFILE.LANGUAGE" | translate }}</label>
+            <label for="language" class="form-label">{{
+              "SETTINGS.PROFILE.LANGUAGE" | translate
+            }}</label>
             <select
               id="language"
               class="form-select"
@@ -117,7 +131,9 @@
               name="language"
               #language="ngModel"
             >
-              <option value="" disabled>{{ "SETTINGS.PROFILE.CHOOSE_LANGUAGE" | translate }}</option>
+              <option value="" disabled>
+                {{ "SETTINGS.PROFILE.CHOOSE_LANGUAGE" | translate }}
+              </option>
               <option value="ua">Українська</option>
               <option value="en">English</option>
             </select>
@@ -128,14 +144,14 @@
             class="btn btn-success me-2"
             [disabled]="profileForm.invalid"
           >
-          {{ "SETTINGS.PROFILE.SAVE" | translate }}
+            {{ "SETTINGS.PROFILE.SAVE" | translate }}
           </button>
           <button
             type="button"
             class="btn btn-secondary"
             (click)="cancelEditing()"
           >
-          {{ "SETTINGS.PROFILE.CANCEL" | translate }}
+            {{ "SETTINGS.PROFILE.CANCEL" | translate }}
           </button>
         </form>
         <div *ngIf="profileError" class="alert alert-danger mt-3">

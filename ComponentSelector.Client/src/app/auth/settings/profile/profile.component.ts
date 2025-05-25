@@ -26,10 +26,7 @@ export class ProfileComponent {
   constructor(private translate: TranslateService) {
     this.interfaceLanguage = localStorage.getItem('lang') || 'ua';
   }
-  // switchLanguage(lang: string): void {
-  //   this.translate.use(lang);
-  //   this.interfaceLanguage = lang;
-  // }
+  
   startEditing() {
     this.isUpdating = true;
     const user = this.accountService.user();

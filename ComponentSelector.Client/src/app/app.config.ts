@@ -14,6 +14,7 @@ import { provideToastr } from 'ngx-toastr';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { loaderInterceptor } from './_interceptors/loader.interceptor';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
@@ -22,7 +23,9 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor, loaderInterceptor])),
+    provideHttpClient(
+      withInterceptors([jwtInterceptor, errorInterceptor, loaderInterceptor])
+    ),
     provideAnimations(),
     provideToastr({
       positionClass: 'toast-bottom-right',
@@ -35,6 +38,7 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       }),
+      ModalModule.forRoot(),
     ]),
   ],
 };

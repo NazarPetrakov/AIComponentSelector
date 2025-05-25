@@ -24,7 +24,7 @@
     "SUBTITLE": "An innovative system for analyzing and selecting computer components",
     "BUTTON_SEARCH": "Start Search",
     "BUTTON_AI": "AI Selection",
-    "SMART_SEARCH_TITLE": "Smart Search",
+    "SMART_SEARCH_TITLE": "Search",
     "SMART_SEARCH_DESC": "Filter components by price, availability, category, and more",
     "AI_TITLE": "Artificial Intelligence",
     "AI_DESC": "Get recommendations based on your needs and budget",
@@ -47,6 +47,15 @@
     "APPLY": "Apply",
     "RESET": "Reset"
   },
+  "COMPONENT": {
+    "CARD": {
+      "CATEGORY": "Category",
+      "PRICE": "Price",
+      "COMMENTS": "Reviews count",
+      "CHECK": "View on the website",
+      "HRN": "hrn"
+    }
+  },
   "SETTINGS": {
     "SIDE": {
       "USER_PROFILE": "User profile",
@@ -55,7 +64,7 @@
       "NOTIFICATION": "Notification settings",
       "MY_BUILDS": "My PC builds",
       "FILTERS": "Component selection filters",
-      "HISTORY": "View/Analysis History",
+      "ADMIN": "Admin panel",
       "EXPORT": "Export configurations",
       "OTHER": "Other settings"
     },
@@ -69,7 +78,8 @@
       "UPDATE": "Update profile",
       "CHOOSE_LANGUAGE": "Choose language",
       "SAVE": "Save",
-      "CANCEL": "Cancel"
+      "CANCEL": "Cancel",
+      "NO": "No"
     },
     "CHANGE_PASSWORD": {
       "CURRENT": "Current password",
@@ -83,6 +93,39 @@
       "NEW": "New email",
       "ENTER_NEW": "Enter new email",
       "CHANGE": "Change"
+    },
+    "BUILDS": {
+      "TITLE": "Saved Builds",
+      "LOADING": "Loading your builds",
+      "BUILD": "Build",
+      "CPU": "CPU",
+      "MOTHERBOARD": "Motherboard",
+      "RAM": "RAM",
+      "STORAGE": "Storage",
+      "GPU": "GPU",
+      "PSU": "PSU",
+      "CASE": "Case",
+      "HRN": "hrn",
+      "TOTAL": "Total price",
+      "DELETE": "Delete",
+      "EXPORT": "Export",
+      "NO_BUILDS": "You haven't saved any builds yet"
+    },
+    "OTHER": {
+      "OTHER": "Other settings",
+      "DELETE_ACCOUNT": "Delete account",
+      "DELETE_INFO": "This action cannot be undone. All your data will be permanently deleted"
+    },
+    "ADMIN": {
+      "STATISTICS": "Statistics",
+      "TOTAL_USERS": "Number of users",
+      "TOTAL_BUILDS": "Number of builds",
+      "TOTAL_COMPONENTS": "Number of components",
+      "CHANGE_ROLE": "Changing a user's role",
+      "USERNAME": "Username",
+      "NEW_ROLE": "New role",
+      "TAKE_ROLE": "Choose role",
+      "CHANGE": "Change role"
     }
   },
   "LOGIN": {
@@ -131,7 +174,11 @@
       "COMPATIBILITY": "Compatibility",
       "TOTAL_COST": "Total cost",
       "RESULT_TITLE": "All components are selected to ensure compatibility and the best performance for your application.",
-      "REGISTER_FIRST": "Please, register first"
+      "REGISTER_FIRST": "Please, register first",
+      "PRICE": "Price",
+      "SAVE": "Save build",
+      "SAVE_INFO": "You can view your saved builds in",
+      "SAVE_INFO_PATH": "Your profile → Settings → My PC Builds"
     },
     "DIALOG": {
       "ASSISTANT_TITLE": "AI-assistant",

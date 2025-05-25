@@ -11,6 +11,10 @@ import { AiSelectingComponent } from './ai-selecting/ai-selecting.component';
 import { authGuard } from './_guards/auth.guard';
 import { ServerErrorComponent } from './error/server-error/server-error.component';
 import { NotFoundComponent } from './error/not-found/not-found.component';
+import { MyBuildsComponent } from './auth/settings/my-builds/my-builds.component';
+import { OtherSettingsComponent } from './auth/settings/other-settings/other-settings.component';
+import { AdminPanelComponent } from './auth/settings/admin-panel/admin-panel.component';
+import { adminGuard } from './_guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +30,13 @@ export const routes: Routes = [
           { path: 'profile', component: ProfileComponent },
           { path: 'change-password', component: ChangePasswordComponent },
           { path: 'change-email', component: ChangeEmailComponent },
+          { path: 'my-builds', component: MyBuildsComponent },
+          { path: 'other', component: OtherSettingsComponent },
+          {
+            path: 'admin',
+            component: AdminPanelComponent,
+            canActivate: [adminGuard],
+          },
           { path: '', redirectTo: 'profile', pathMatch: 'full' },
         ],
       },
@@ -35,11 +46,11 @@ export const routes: Routes = [
     path: 'ai-selector',
     component: AiSelectingComponent,
   },
-  { path: 'server-error', component: ServerErrorComponent},
-  { path: 'not-found', component: NotFoundComponent},
+  { path: 'server-error', component: ServerErrorComponent },
+  { path: 'not-found', component: NotFoundComponent },
   { path: 'catalog/search', component: CatalogComponent },
   { path: 'catalog/:category', component: CatalogComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', component: HomeComponent },
+  { path: '**', component: NotFoundComponent },
 ];

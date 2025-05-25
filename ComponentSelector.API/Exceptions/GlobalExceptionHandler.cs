@@ -42,6 +42,9 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger, IHo
             case ArgumentNullException:
                 errorResponse.Status = (int)HttpStatusCode.InternalServerError;
                 break;
+            case ForbiddenAccessException:
+                errorResponse.Status = (int)HttpStatusCode.Forbidden;
+                break;
             default:
                 errorResponse.Status = (int)HttpStatusCode.InternalServerError;
                 errorResponse.Title = "Internal Server Error";

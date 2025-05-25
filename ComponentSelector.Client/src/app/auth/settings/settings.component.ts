@@ -18,6 +18,6 @@ export class SettingsComponent implements OnInit {
   }
 
   loadCurrentUser() {
-    this.accountService.getMe();
+    this.accountService.setMe().subscribe();
   }
 }

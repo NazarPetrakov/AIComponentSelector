@@ -11,6 +11,9 @@ import { ChatService } from '../_services/chat.service';
 import { BotMessage } from '../_models/botMessage';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BuildCardComponent } from './build-card/build-card.component';
+import { ComputerComponent } from '../_models/computerComponent';
+import { CreateUserBuild } from '../_models/build/createUserBuild';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ai-selecting',
@@ -22,18 +25,21 @@ import { BuildCardComponent } from './build-card/build-card.component';
     TranslateModule,
     TooltipModule,
     TranslateModule,
-    BuildCardComponent
+    BuildCardComponent,
   ],
   templateUrl: './ai-selecting.component.html',
   styleUrl: './ai-selecting.component.css',
 })
 export class AiSelectingComponent {
   @ViewChild('chatBody') chatBody!: ElementRef;
+  private toastr = inject(ToastrService);
   chatService = inject(ChatService);
   accountService = inject(AccountService);
   buildsService = inject(BuildsService);
   translateService = inject(TranslateService);
   chatRequestQueryParams: ChatRequestQueryParams;
+
+  saveBuildDisableToggle: boolean = false;
 
   currency: 'UAH' | 'USD' = 'USD';
   build: Build | null = null;
@@ -148,12 +154,35 @@ export class AiSelectingComponent {
     this.buildsService.getAiBuild(this.chatRequestQueryParams).subscribe({
       next: (result) => {
         this.build = result;
-        console.log(result);
         this.loading = false;
       },
       error: () => {
         this.error = 'Build error. Please try again.';
         this.loading = false;
+      },
+    });
+  }
+
+  addBuild() {
+    if (!this.build) return;
+
+    let createBuild: CreateUserBuild = {
+      CPUId: this.build.cpu?.id ?? null,
+      MotherboardId: this.build.motherboard?.id ?? null,
+      RAMId: this.build.ram?.id ?? null,
+      StorageId: this.build.storage?.id ?? null,
+      GPUId: this.build.gpu?.id ?? null,
+      PSUId: this.build.psu?.id ?? null,
+      CaseId: this.build.case?.id ?? null,
+    };
+
+    console.log(createBuild);
+
+    this.buildsService.createBuild(createBuild).subscribe({
+      next: (id) => {
+        this.saveBuildDisableToggle = !this.saveBuildDisableToggle;
+        this.buildsService.setUserBuilds().subscribe();
+        this.toastr.success(`Successful saving the build #${id}`);
       },
     });
   }
@@ -194,6 +223,20 @@ export class AiSelectingComponent {
       { category: 'storage', data: this.build.storage },
     ];
   }
+
+  getDefaultComponent(category: string): ComputerComponent {
+    return {
+      id: -1,
+      category,
+      title: 'Not found',
+      price: 0,
+      availability: 'N/A',
+      link: 'default-featured-image.jpg',
+      imageUrl: 'assets/images/default-featured-image.jpg',
+      reviews: 0,
+    };
+  }
+
   toggleChat() {
     if (!this.chatOpen) {
       if (!this.chatService.messages()) {

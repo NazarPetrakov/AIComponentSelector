@@ -1,6 +1,6 @@
 namespace ComponentSelector.Application.Contracts;
 
-public class CreateBuildDto
+public class SearchBuildDto
 {
     public required string CPUTitle { get; set; }
     public required string MotherboardTitle { get; set; }

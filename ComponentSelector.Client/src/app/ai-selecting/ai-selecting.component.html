@@ -76,14 +76,22 @@
         {{ "AI_PAGE.MAIN.AI_FOUND_CONFIG" | translate }}:
       </h4>
       <app-build-card
-        [title]="'CPU: ' + build.chatBuildResponse.build.cpu.title"
+        [title]="
+          ('SETTINGS.BUILDS.CPU' | translate) +
+          ': ' +
+          build.chatBuildResponse.build.cpu.title
+        "
         [price]="build.chatBuildResponse.build.cpu.price"
         [characteristics]="build.chatBuildResponse.build.cpu.characteristics"
         [compatibility]="build.compatibility.cpu"
       ></app-build-card>
 
       <app-build-card
-        [title]="'GPU: ' + build.chatBuildResponse.build.gpu.title"
+        [title]="
+          ('SETTINGS.BUILDS.GPU' | translate) +
+          ': ' +
+          build.chatBuildResponse.build.gpu.title
+        "
         [price]="build.chatBuildResponse.build.gpu.price"
         [characteristics]="build.chatBuildResponse.build.gpu.characteristics"
         [compatibility]="build.compatibility.gpu"
@@ -91,7 +99,9 @@
 
       <app-build-card
         [title]="
-          'Motherboard: ' + build.chatBuildResponse.build.motherboard.title
+          ('SETTINGS.BUILDS.MOTHERBOARD' | translate) +
+          ': ' +
+          build.chatBuildResponse.build.motherboard.title
         "
         [price]="build.chatBuildResponse.build.motherboard.price"
         [characteristics]="
@@ -101,28 +111,44 @@
       ></app-build-card>
 
       <app-build-card
-        [title]="'Case: ' + build.chatBuildResponse.build.case.title"
+        [title]="
+          ('SETTINGS.BUILDS.CASE' | translate) +
+          ': ' +
+          build.chatBuildResponse.build.case.title
+        "
         [price]="build.chatBuildResponse.build.case.price"
         [characteristics]="build.chatBuildResponse.build.case.characteristics"
         [compatibility]="build.compatibility.case"
       ></app-build-card>
 
       <app-build-card
-        [title]="'PSU: ' + build.chatBuildResponse.build.psu.title"
+        [title]="
+          ('SETTINGS.BUILDS.PSU' | translate) +
+          ': ' +
+          build.chatBuildResponse.build.psu.title
+        "
         [price]="build.chatBuildResponse.build.psu.price"
         [characteristics]="build.chatBuildResponse.build.psu.characteristics"
         [compatibility]="build.compatibility.psu"
       ></app-build-card>
 
       <app-build-card
-        [title]="'RAM: ' + build.chatBuildResponse.build.ram.title"
+        [title]="
+          ('SETTINGS.BUILDS.RAM' | translate) +
+          ': ' +
+          build.chatBuildResponse.build.ram.title
+        "
         [price]="build.chatBuildResponse.build.ram.price"
         [characteristics]="build.chatBuildResponse.build.ram.characteristics"
         [compatibility]="build.compatibility.ram"
       ></app-build-card>
 
       <app-build-card
-        [title]="'Storage: ' + build.chatBuildResponse.build.storage.title"
+        [title]="
+          ('SETTINGS.BUILDS.STORAGE' | translate) +
+          ': ' +
+          build.chatBuildResponse.build.storage.title
+        "
         [price]="build.chatBuildResponse.build.storage.price"
         [characteristics]="
           build.chatBuildResponse.build.storage.characteristics
@@ -149,14 +175,33 @@
           @if(comp.data){
           <app-component-card [component]="comp.data"></app-component-card>
           }@else {
-          <div class="container">{{ comp.category }}</div>
+          <app-component-card
+            [component]="getDefaultComponent(comp.category)"
+          ></app-component-card>
           }
         </div>
+      </div>
+      <button
+        class="btn btn-success"
+        [disabled]="saveBuildDisableToggle"
+        (click)="addBuild()"
+      >
+        {{ "AI_PAGE.MAIN.SAVE" | translate }}
+      </button>
+      <div class="mt-2 text-secondary">
+        <i class="bi bi-info-circle me-2"></i>
+        <span
+          >{{ "AI_PAGE.MAIN.SAVE_INFO" | translate }}
+          <span class="font-medium text-gray-600"
+            >{{ "AI_PAGE.MAIN.SAVE_INFO_PATH" | translate }}</span
+          >.</span
+        >
       </div>
     </div>
   </div>
 </div>
 
+<!-- chat -->
 <button
   class="btn btn-primary rounded-circle chat-button"
   (click)="toggleChat()"

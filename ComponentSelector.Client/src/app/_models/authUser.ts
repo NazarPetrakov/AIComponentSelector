@@ -1,4 +1,5 @@
-export class AuthUser{
-    userName?: string;
-    token?: string;
+export class AuthUser {
+  id?: number;
+  userName?: string;
+  token?: string;
 }

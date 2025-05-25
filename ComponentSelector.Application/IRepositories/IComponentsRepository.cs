@@ -16,4 +16,5 @@ public interface IComponentsRepository
     Task<List<string>> GetComponentTitlesAsync(BaseSpecification<Component> spec);
     Task<Component?> GetComponentByIdAsync(int id, BaseSpecification<Component>? spec);
     IQueryable<Component> GetComponentsQuery(BaseSpecification<Component> spec);
+    Task<int> GetTotalComponentsAsync();
 }

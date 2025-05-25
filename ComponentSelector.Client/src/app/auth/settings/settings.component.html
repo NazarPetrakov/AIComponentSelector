@@ -21,46 +21,34 @@
           routerLink="change-password"
           class="list-group-item list-group-item-action border-0"
         >
-          <i class="bi bi-lock me-2"></i>{{ "SETTINGS.SIDE.CHANGE_PASSWORD" | translate }}
+          <i class="bi bi-lock me-2"></i
+          >{{ "SETTINGS.SIDE.CHANGE_PASSWORD" | translate }}
         </a>
         <a
           routerLink="change-email"
           class="list-group-item list-group-item-action border-0"
         >
-          <i class="bi bi-envelope me-2"></i>{{ "SETTINGS.SIDE.CHANGE_EMAIL" | translate }}
+          <i class="bi bi-envelope me-2"></i
+          >{{ "SETTINGS.SIDE.CHANGE_EMAIL" | translate }}
         </a>
         <a
-          routerLink="/settings"
+          routerLink="my-builds"
           class="list-group-item list-group-item-action border-0"
         >
-          <i class="bi bi-bell me-2"></i>{{ "SETTINGS.SIDE.NOTIFICATION" | translate }}
+          <i class="bi bi-cpu me-2"></i
+          >{{ "SETTINGS.SIDE.MY_BUILDS" | translate }}
         </a>
+        @if (accountService.user()?.role === "Admin") {
         <a
-          routerLink="/settings"
+          routerLink="admin"
           class="list-group-item list-group-item-action border-0"
         >
-          <i class="bi bi-cpu me-2"></i>{{ "SETTINGS.SIDE.MY_BUILDS" | translate }}
+          <i class="bi bi-graph-up-arrow me-2"></i
+          >{{ "SETTINGS.SIDE.ADMIN" | translate }}
         </a>
+        }
         <a
-          routerLink="/settings"
-          class="list-group-item list-group-item-action border-0"
-        >
-          <i class="bi bi-sliders me-2"></i>{{ "SETTINGS.SIDE.FILTERS" | translate }}
-        </a>
-        <a
-          routerLink="/settings"
-          class="list-group-item list-group-item-action border-0"
-        >
-          <i class="bi bi-graph-up-arrow me-2"></i>{{ "SETTINGS.SIDE.HISTORY" | translate }}
-        </a>
-        <a
-          routerLink="/settings"
-          class="list-group-item list-group-item-action border-0"
-        >
-          <i class="bi bi-download me-2"></i>{{ "SETTINGS.SIDE.EXPORT" | translate }}
-        </a>
-        <a
-          routerLink="/settings"
+          routerLink="other"
           class="list-group-item list-group-item-action border-0"
         >
           <i class="bi bi-gear me-2"></i>{{ "SETTINGS.SIDE.OTHER" | translate }}

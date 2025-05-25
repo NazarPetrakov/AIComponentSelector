@@ -1,11 +1,22 @@
+using AutoMapper;
 using ComponentSelector.Application.Contracts;
 using ComponentSelector.Application.Contracts.Build;
+using ComponentSelector.Application.Extensions;
+using ComponentSelector.Application.Helpers.Pagination;
+using ComponentSelector.Application.Helpers.QueryParams;
+using ComponentSelector.Application.IRepositories;
 using ComponentSelector.Application.IServices;
+using ComponentSelector.Domain.Entities;
 using ComponentSelector.Domain.Enums;
+using ComponentSelector.Domain.Exceptions;
+using ComponentSelector.Domain.Specification;
+using Microsoft.AspNetCore.Http;
 
 namespace ComponentSelector.Application.Services;
 
-public class BuildService(IAppOpenAIService openAIService, IComponentsService componentsService) : IBuildService
+public class BuildService(IAppOpenAIService openAIService,
+    IComponentsService componentsService, IBuildsRepository buildsRepository,
+    IMapper mapper) : IBuildService
 {
     public async Task<BuildDto> AIBuildPC(ChatBuildRequest request)
     {
@@ -25,7 +36,7 @@ public class BuildService(IAppOpenAIService openAIService, IComponentsService co
         // }, chatBuild.Compatibility);
     }
 
-    public async Task<BuildDto> BuildPC(CreateBuildDto dto)
+    public async Task<BuildDto> BuildPC(SearchBuildDto dto)
     {
         return await CreateBuildAsync(new Dictionary<CategoryEnum, string?>
         {
@@ -37,6 +48,101 @@ public class BuildService(IAppOpenAIService openAIService, IComponentsService co
             { CategoryEnum.PSU, dto.PSUTitle },
             { CategoryEnum.Cases, dto.CaseTitle }
         });
+    }
+
+    public async Task<int> CreateBuildAsync(CreateUserBuildDto createBuild, string userId)
+    {
+        Build build = mapper.Map<Build>(createBuild);
+
+        build.TotalPrice += await ValidateAndGetComponentPriceAsync(createBuild.CPUId, CategoryEnum.Processors,
+            nameof(createBuild.CPUId)) ?? 0;
+        build.TotalPrice += await ValidateAndGetComponentPriceAsync(createBuild.MotherboardId, CategoryEnum.Motherboards,
+            nameof(createBuild.MotherboardId)) ?? 0;
+        build.TotalPrice += await ValidateAndGetComponentPriceAsync(createBuild.RAMId, CategoryEnum.Memory,
+            nameof(createBuild.RAMId)) ?? 0;
+        build.TotalPrice += await ValidateAndGetComponentPriceAsync(createBuild.StorageId, CategoryEnum.SSD,
+            nameof(createBuild.StorageId)) ?? 0;
+        build.TotalPrice += await ValidateAndGetComponentPriceAsync(createBuild.GPUId, CategoryEnum.Videocards,
+            nameof(createBuild.GPUId)) ?? 0;
+        build.TotalPrice += await ValidateAndGetComponentPriceAsync(createBuild.PSUId, CategoryEnum.PSU,
+            nameof(createBuild.PSUId)) ?? 0;
+        build.TotalPrice += await ValidateAndGetComponentPriceAsync(createBuild.CaseId, CategoryEnum.Cases,
+            nameof(createBuild.CaseId)) ?? 0;
+
+        build.UserId = int.Parse(userId);
+
+        bool successfulCreating = await buildsRepository.CreateBuildAsync(build);
+
+        if (!successfulCreating) throw new SaveChangesException("Failed to save the build to the database.");
+
+        return build.Id;
+    }
+    public async Task DeleteBuildAsync(int buildId, string userId)
+    {
+        var build = await buildsRepository.GetBuildByIdAsync(buildId, null) ??
+            throw new ItemNotFoundException($"Build with id: {buildId} not found.");
+
+        if (build.UserId != int.Parse(userId))
+        {
+            throw new ForbiddenAccessException("You are not authorized to delete this build.");
+        }
+
+        bool successfulDeleting = await buildsRepository.DeleteBuildAsync(build);
+
+        if (!successfulDeleting) throw new SaveChangesException("Failed to delete the build from the database.");
+    }
+
+    public async Task<UserBuildDto> GetBuildByIdAsync(int id)
+    {
+        BaseSpecification<Build> spec = new BuildWithComponentsSpecification();
+
+        Build build = await buildsRepository.GetBuildByIdAsync(id, spec) ??
+            throw new ItemNotFoundException($"Build with id: {id} not found.");
+
+        return mapper.Map<UserBuildDto>(build);
+    }
+
+    public async Task<PagedList<UserBuildDto>> GetPagedBuildsAsync(BuildQueryParams buildQueryParams,
+        HttpResponse httpResponse, BaseSpecification<Build> spec)
+    {
+        var builds = await buildsRepository.GetPagedBuildsAsync(buildQueryParams,
+           spec);
+
+        httpResponse.AddPaginationHeader(builds);
+
+        var buildsDtos = mapper.Map<List<UserBuildDto>>(builds);
+
+        return new PagedList<UserBuildDto>
+        (
+            buildsDtos,
+            builds.TotalCount,
+            builds.CurrentPage,
+            builds.PageSize
+        );
+    }
+
+    public async Task<PagedList<UserBuildDto>> GetPagedUserBuildsAsync(string userId,
+        BuildQueryParams buildQueryParams, HttpResponse httpResponse)
+    {
+        var id = int.Parse(userId);
+
+        return await GetPagedBuildsAsync(buildQueryParams, httpResponse,
+                new BuildWithComponentsSpecification(b => b.UserId == id));
+    }
+
+    private async Task<double?> ValidateAndGetComponentPriceAsync(int? componentId, CategoryEnum expectedCategory,
+        string fieldName)
+    {
+        if (!componentId.HasValue)
+            return 0;
+
+        var component = await componentsService.GetComponentByIdAsync(componentId.Value);
+
+        if (!string.Equals(component.Category, expectedCategory.ToString(), StringComparison.OrdinalIgnoreCase))
+            throw new InvalidOperationException(
+                $"{fieldName} with Id: {componentId.Value} is not a valid {expectedCategory} component.");
+
+        return component.Price;
     }
     private async Task<BuildDto> CreateAiBuildAsync(ChatBuildResponse chatBuildResponse)
     {

@@ -22,7 +22,9 @@ public class ComponentsService(IComponentsRepository componentsRepository,
     public async Task<ComponentWithCharacteristicsDto> GetComponentByIdAsync(int id)
     {
         var specification = new ComponentWithCharacteristicsSpecification();
-        var component = await componentsRepository.GetComponentByIdAsync(id, specification);
+        
+        var component = await componentsRepository.GetComponentByIdAsync(id, specification) ??
+            throw new ItemNotFoundException($"Component with id: {id} not found.");
 
         return mapper.Map<ComponentWithCharacteristicsDto>(component);
     }

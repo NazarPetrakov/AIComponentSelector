@@ -1,5 +1,6 @@
 using AutoMapper;
 using ComponentSelector.Application.Contracts;
+using ComponentSelector.Application.Contracts.Build;
 using ComponentSelector.Application.Contracts.User;
 using ComponentSelector.Domain.Entities;
 
@@ -11,8 +12,11 @@ public class AppMappingProfile : Profile
     {
         CreateMap<RegisterDto, AppUser>();
         CreateMap<Component, ComponentDto>();
-        CreateMap<Component, ComponentWithCharacteristicsDto>();
-        CreateMap<Characteristic, CharacteristicDto>();
+        CreateMap<Component, ComponentWithCharacteristicsDto>().ReverseMap();
+        CreateMap<Characteristic, CharacteristicDto>().ReverseMap();
         CreateMap<AppUser, UserDto>();
+        // CreateMap<Build, BuildDto>();
+        CreateMap<Build, UserBuildDto>();
+        CreateMap<CreateUserBuildDto, Build>();
     }
 }

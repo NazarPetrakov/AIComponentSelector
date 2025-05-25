@@ -30,5 +30,7 @@ public class AccountController(IAuthService authService, IUserService userServic
     [HttpPut("update-user")]
     public async Task UpdateUser(UpdateUserDto updateUserDto) =>
         await userService.UpdateUserAsync(User.GetUserId(), updateUserDto);
-    //TODO: Add delete
+    [HttpDelete("me")]
+    public async Task DeleteUser() =>
+        await authService.DeleteUserAsync(User.GetUserId());
 }

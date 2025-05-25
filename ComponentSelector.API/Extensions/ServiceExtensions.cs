@@ -33,6 +33,9 @@ public static class ServiceExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAppOpenAIService, AppOpenAIService>();
         services.AddScoped<IBuildService, BuildService>();
+        services.AddScoped<IBuildsRepository, BuildsRepository>();
+        services.AddScoped<IAdminService, AdminService>();
+
         services.AddOpenAIService(settings =>
         {
             settings.ApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY")

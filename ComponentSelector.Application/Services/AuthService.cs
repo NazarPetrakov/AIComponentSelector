@@ -57,6 +57,21 @@ public class AuthService(UserManager<AppUser> userManager,
 
         return userDto;
     }
+    public async Task DeleteUserAsync(string userId)
+    {
+        if (string.IsNullOrEmpty(userId))
+            throw new ArgumentNullException("No user Id.");
+
+        var user = await userManager.FindByIdAsync(userId) ??
+            throw new ArgumentNullException($"No user with id: {userId}.");
+
+        var result = await userManager.DeleteAsync(user);
+
+        if (!result.Succeeded)
+        {
+            throw new IdentityException(result);
+        }
+    }
     public async Task<AuthUserDto> LoginAsync(LoginDto loginDto)
     {
         var username = loginDto.UserName
@@ -72,6 +87,7 @@ public class AuthService(UserManager<AppUser> userManager,
 
         return new AuthUserDto
         {
+            Id = user.Id,
             UserName = username,
             Token = await tokenService.GenerateTokenAsync(user)
         };
@@ -96,6 +112,7 @@ public class AuthService(UserManager<AppUser> userManager,
 
         return new AuthUserDto
         {
+            Id = user.Id,
             UserName = user.UserName,
             Token = await tokenService.GenerateTokenAsync(user)
         };

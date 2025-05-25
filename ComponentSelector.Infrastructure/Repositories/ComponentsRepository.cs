@@ -55,4 +55,8 @@ public class ComponentsRepository(AppDbContext context) : IComponentsRepository
             .Select(c => c.Title ?? "")
             .ToListAsync();
     }
+    public async Task<int> GetTotalComponentsAsync()
+    {
+        return await context.Components.CountAsync();
+    }
 }

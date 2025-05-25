@@ -9,4 +9,5 @@ public interface IAuthService
     Task<UserDto> GetCurrentUserAsync(string userId);
     Task ChangePasswordAsync(string userId, ChangePasswordDto changePasswordDto);
     Task ChangeEmailAsync(string userId, ChangeEmailDto changeEmailDto);
+    Task DeleteUserAsync(string userId);
 }

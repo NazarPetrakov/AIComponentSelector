@@ -1,0 +1,80 @@
+<div class="container mt-4">
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title mb-3">
+        <i class="bi bi-bar-chart-line"></i>
+        {{ "SETTINGS.ADMIN.STATISTICS" | translate }}
+      </h5>
+      <div class="row text-center">
+        @if (stats) {
+        <div class="col-md-4">
+          <h6>
+            <i class="bi bi-people-fill"></i>
+            {{ "SETTINGS.ADMIN.TOTAL_USERS" | translate }}
+          </h6>
+          <p class="fs-4">{{ stats.totalUsers }}</p>
+        </div>
+        <div class="col-md-4">
+          <h6>
+            <i class="bi bi-cpu-fill"></i>
+            {{ "SETTINGS.ADMIN.TOTAL_BUILDS" | translate }}
+          </h6>
+          <p class="fs-4">{{ stats.totalBuilds }}</p>
+        </div>
+        <div class="col-md-4">
+          <h6>
+            <i class="bi bi-hdd-stack-fill"></i>
+            {{ "SETTINGS.ADMIN.TOTAL_COMPONENTS" | translate }}
+          </h6>
+          <p class="fs-4">{{ stats.totalComponents }}</p>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-3">
+        <i class="bi bi-shield-lock-fill"></i>
+        {{ "SETTINGS.ADMIN.CHANGE_ROLE" | translate }}
+      </h5>
+
+      <form [formGroup]="roleForm" (ngSubmit)="changeRole()">
+        <div class="mb-3">
+          <label for="userName" class="form-label">{{
+            "SETTINGS.ADMIN.USERNAME" | translate
+          }}</label>
+          <input
+            type="text"
+            id="userName"
+            class="form-control"
+            formControlName="userName"
+            placeholder="{{ 'SETTINGS.ADMIN.USERNAME' | translate }}"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="newRole" class="form-label">{{
+            "SETTINGS.ADMIN.NEW_ROLE" | translate
+          }}</label>
+          <select id="newRole" class="form-select" formControlName="newRole">
+            <option value="" disabled selected>
+              {{ "SETTINGS.ADMIN.TAKE_ROLE" | translate }}
+            </option>
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="roleForm.invalid"
+        >
+          {{ "SETTINGS.ADMIN.CHANGE" | translate }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

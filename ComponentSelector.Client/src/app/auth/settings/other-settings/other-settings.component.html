@@ -1,0 +1,26 @@
+<div class="card shadow rounded-4 border-0">
+  <div class="card-body p-4">
+    <h5 class="card-title d-flex align-items-center mb-3">
+      <i class="bi bi-gear me-2 fs-4 text-secondary"></i>
+      {{ "SETTINGS.OTHER.OTHER" | translate }}
+    </h5>
+    <hr />
+
+    @if (accountService.currentUser()) {
+    <form (ngSubmit)="deleteAccount()">
+      <div class="mb-3">
+        <label class="form-label fw-bold">{{
+          "SETTINGS.OTHER.DELETE_ACCOUNT" | translate
+        }}</label>
+        <p class="text-muted mb-2">
+            {{ "SETTINGS.OTHER.DELETE_INFO" | translate }}.
+        </p>
+        <button type="submit" class="btn btn-outline-danger">
+          <i class="bi bi-trash me-1"></i>
+          {{ "SETTINGS.OTHER.DELETE_ACCOUNT" | translate }}
+        </button>
+      </div>
+    </form>
+    }
+  </div>
+</div>

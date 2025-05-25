@@ -38,6 +38,11 @@ public static class AuthenticationExtension
                 ValidateAudience = false,
             };
         });
+        services.AddAuthorization(o =>
+        {
+            o.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+        });
+
         return services;
     }
 }

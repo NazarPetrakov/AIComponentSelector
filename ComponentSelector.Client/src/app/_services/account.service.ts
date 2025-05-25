@@ -3,12 +3,15 @@ import { AuthUser } from '../_models/authUser';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { User } from '../_models/user';
+import { BuildsService } from './builds.service';
+import { Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
   private http = inject(HttpClient);
+  private buildsService = inject(BuildsService);
   baseUrl = environment.baseUrl;
   currentUser = signal<AuthUser | null>(null);
   user = signal<User | null>(null);
@@ -39,14 +42,14 @@ export class AccountService {
     }
     return;
   }
-  getMe() {
+  setMe(): Observable<User | null> {
     if (this.currentUser()) {
-      return this.http.get<User>(this.baseUrl + 'account/me').subscribe({
-        next: (user) => this.user.set(user),
-      });
+      return this.http
+        .get<User>(this.baseUrl + 'account/me')
+        .pipe(tap((user) => this.user.set(user)));
+    } else {
+      return of(null);
     }
-    console.log('no current user found');
-    return;
   }
   login(loginData: any) {
     return this.http.post<AuthUser>(this.baseUrl + 'account/login', loginData);
@@ -60,5 +63,9 @@ export class AccountService {
   logout() {
     localStorage.removeItem('authUser');
     this.currentUser.set(null);
+    this.buildsService.resetBuilds();
+  }
+  deleteUser() {
+    return this.http.delete(this.baseUrl + 'account/me');
   }
 }
