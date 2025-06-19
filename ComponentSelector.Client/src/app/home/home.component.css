@@ -1,0 +1,58 @@
+.hero {
+    background: linear-gradient(to right, #1a252f, #10846d);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    border-radius: 1rem;
+  }
+  
+  .category-card {
+    transition: transform 0.3s ease;
+    background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #dee2e6;
+    text-align: center;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #212529;
+  }
+  
+  .card-button {
+    background-color: #07936e;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .card-button:hover {
+    background-color: #056c51;
+  }
+  
+  @media (max-width: 768px) {
+    .category-card {
+      padding: 1rem;
+    }
+  
+    .card-title {
+      font-size: 1.2rem;
+    }
+  
+    .card-button {
+      padding: 0.4rem 1rem;
+    }
+  }
+  

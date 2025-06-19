@@ -1,0 +1,183 @@
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card p-4 shadow-lg" style="width: 500px">
+    <h3 class="text-center mb-3">{{ "REGISTER.REGISTER" | translate }}</h3>
+
+    <form (ngSubmit)="register()" [formGroup]="registerForm">
+      <div class="mb-3">
+        <label for="username" class="form-label">{{ 'REGISTER.USERNAME' | translate }}</label>
+        <input
+          type="text"
+          id="username"
+          class="form-control"
+          formControlName="username"
+          placeholder="{{ 'REGISTER.USERNAME_ENTER' | translate }}"
+          [class.is-invalid]="
+            registerForm.get('username')?.invalid &&
+            registerForm.get('username')?.touched
+          "
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            registerForm.get('username')?.invalid &&
+            registerForm.get('username')?.touched
+          "
+        >
+          Username is required.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">{{ 'REGISTER.EMAIL' | translate }}</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="{{ 'REGISTER.EMAIL_ENTER' | translate }}"
+          [class.is-invalid]="
+            registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.touched
+          "
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.touched
+          "
+        >
+          Enter a valid email.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="age" class="form-label">{{ 'REGISTER.AGE' | translate }}</label>
+        <input
+          type="number"
+          id="age"
+          class="form-control"
+          formControlName="age"
+          placeholder="{{ 'REGISTER.AGE_ENTER' | translate }}"
+          [class.is-invalid]="
+            registerForm.get('age')?.invalid && registerForm.get('age')?.touched
+          "
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            registerForm.get('age')?.invalid && registerForm.get('age')?.touched
+          "
+        >
+          Enter a valid age.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="country" class="form-label">{{ 'REGISTER.COUNTRY' | translate }}</label>
+        <input
+          type="text"
+          id="country"
+          class="form-control"
+          formControlName="country"
+          placeholder="{{ 'REGISTER.COUNTRY_ENTER' | translate }}"
+          [class.is-invalid]="
+            registerForm.get('country')?.invalid &&
+            registerForm.get('country')?.touched
+          "
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            registerForm.get('country')?.invalid &&
+            registerForm.get('country')?.touched
+          "
+        >
+          Country must be less than 256 symbols .
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">{{ 'REGISTER.PASSWORD' | translate }}</label>
+        <div class="input-group">
+          <input
+            [type]="passwordVisible ? 'text' : 'password'"
+            id="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="{{ 'REGISTER.PASSWORD_ENTER' | translate }}"
+            [class.is-invalid]="
+              registerForm.get('password')?.invalid &&
+              registerForm.get('password')?.touched
+            "
+          />
+          <span
+            class="input-group-text"
+            style="cursor: pointer"
+            (click)="togglePassword()"
+          >
+            <i
+              class="bi"
+              [ngClass]="passwordVisible ? 'bi-eye-slash' : 'bi-eye'"
+            ></i>
+          </span>
+        </div>
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.touched
+          "
+        >
+          Password must be at least 8 characters.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="confirmedPassword" class="form-label"
+          >{{ 'REGISTER.CONFIRM_PASSWORD' | translate }}</label
+        >
+        <div class="input-group">
+          <input
+            [type]="confirmedPasswordVisible ? 'text' : 'password'"
+            id="confirmedPassword"
+            class="form-control"
+            formControlName="confirmedPassword"
+            placeholder="{{ 'REGISTER.CONFIRM_PASSWORD_ENTER' | translate }}"
+            [class.is-invalid]="
+              registerForm.get('confirmedPassword')?.invalid &&
+              registerForm.get('confirmedPassword')?.touched
+            "
+          />
+          <span
+            class="input-group-text"
+            style="cursor: pointer"
+            (click)="toggleConfirmedPassword()"
+          >
+            <i
+              class="bi"
+              [ngClass]="confirmedPasswordVisible ? 'bi-eye-slash' : 'bi-eye'"
+            ></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="registerForm.invalid"
+        >
+        {{ 'REGISTER.REGISTER' | translate }}
+        </button>
+        <a routerLink="/login" class="text-primary"
+          >{{ 'REGISTER.BACK' | translate }}</a
+        >
+      </div>
+    </form>
+
+    <div *ngIf="registerError" class="alert alert-danger mt-3">
+      <div [innerHTML]="registerError"></div>
+    </div>
+  </div>
+</div>

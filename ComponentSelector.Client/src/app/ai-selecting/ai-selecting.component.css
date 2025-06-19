@@ -1,0 +1,51 @@
+.chat-button {
+  position: fixed;
+  bottom: 4vh; 
+  right: 3vw;  
+  width: 4vw;  
+  height: 4vw; 
+  font-size: 2vw; 
+  z-index: 1050;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+  
+  .chat-window {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 350px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1050;
+  }
+  
+  .chat-body {
+    overflow-y: auto;
+    flex: 1;
+    padding: 10px;
+  }
+
+  /* You can use media queries for further fine-tuning at specific breakpoints */
+@media (max-width: 768px) {
+  .chat-button {
+    width: 10vw;
+    height: 10vw;
+    font-size: 5vw;
+    bottom: 4vh;
+    right: 4vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-button {
+    width: 15vw;
+    height: 15vw;
+    font-size: 8vw;
+    bottom: 4vh;
+    right: 4vw;
+  }
+}

@@ -1,0 +1,63 @@
+<div class="container-fluid mt-2">
+  <div class="row">
+    <div class="col-md-3 border-end">
+      <div class="mb-4">
+        @if (accountService.user()) {
+        <div class="fw-bold">{{ accountService.user()?.userName }}</div>
+        <div class="text-muted small">{{ accountService.user()?.email }}</div>
+        }
+      </div>
+
+      <ul class="list-group">
+        <a
+          routerLink="profile"
+          routerLinkActive="active"
+          class="list-group-item list-group-item-action border-0"
+        >
+          <i class="bi bi-person-circle me-2"></i
+          >{{ "SETTINGS.SIDE.USER_PROFILE" | translate }}
+        </a>
+        <a
+          routerLink="change-password"
+          class="list-group-item list-group-item-action border-0"
+        >
+          <i class="bi bi-lock me-2"></i
+          >{{ "SETTINGS.SIDE.CHANGE_PASSWORD" | translate }}
+        </a>
+        <a
+          routerLink="change-email"
+          class="list-group-item list-group-item-action border-0"
+        >
+          <i class="bi bi-envelope me-2"></i
+          >{{ "SETTINGS.SIDE.CHANGE_EMAIL" | translate }}
+        </a>
+        <a
+          routerLink="my-builds"
+          class="list-group-item list-group-item-action border-0"
+        >
+          <i class="bi bi-cpu me-2"></i
+          >{{ "SETTINGS.SIDE.MY_BUILDS" | translate }}
+        </a>
+        @if (accountService.user()?.role === "Admin") {
+        <a
+          routerLink="admin"
+          class="list-group-item list-group-item-action border-0"
+        >
+          <i class="bi bi-graph-up-arrow me-2"></i
+          >{{ "SETTINGS.SIDE.ADMIN" | translate }}
+        </a>
+        }
+        <a
+          routerLink="other"
+          class="list-group-item list-group-item-action border-0"
+        >
+          <i class="bi bi-gear me-2"></i>{{ "SETTINGS.SIDE.OTHER" | translate }}
+        </a>
+      </ul>
+    </div>
+
+    <div class="col-md-9">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+@if (isLoading) {
+<div class="text-center my-4">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+} @else {
+<form
+  class="d-flex flex-wrap align-items-center gap-2 mb-3"
+  (ngSubmit)="applyFilters()"
+>
+  <div class="d-flex align-items-center w-auto">
+    <label class="me-2 mb-0">{{ "CATALOG.PRICE" | translate }}:</label>
+    <input
+      type="number"
+      step="100"
+      class="form-control form-control-sm w-auto me-1"
+      placeholder="{{ 'CATALOG.MIN' | translate }}."
+      [(ngModel)]="filters.minPrice"
+      name="minPrice"
+    />
+    <input
+      type="number"
+      step="1000"
+      class="form-control form-control-sm w-auto"
+      placeholder="{{ 'CATALOG.MAX' | translate }}."
+      [(ngModel)]="filters.maxPrice"
+      name="maxPrice"
+    />
+  </div>
+  <label class="me-2 mb-0">{{ "CATALOG.ORDER" | translate }}:</label>
+  <select
+    class="form-select w-auto"
+    [(ngModel)]="sortOption"
+    (ngModelChange)="onSortChange()"
+    name="sortOption"
+  >
+    <option value="default">{{ "CATALOG.DEFAULT" | translate }}</option>
+    <option value="price">{{ "CATALOG.PRICE_ASC" | translate }}</option>
+    <option value="priceDesc">{{ "CATALOG.PRICE_DESC" | translate }}</option>
+    <option value="reviews">{{ "CATALOG.REVIEWS_ASC" | translate }}</option>
+    <option value="reviewsDesc">
+      {{ "CATALOG.REVIEWS_DESC" | translate }}
+    </option>
+  </select>
+  <div class="form-check ms-2">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      id="onlyAvailable"
+      [(ngModel)]="filters.availability"
+      name="onlyAvailable"
+    />
+    <label class="form-check-label mb-0" for="onlyAvailable">{{
+      "CATALOG.AVAILABILITY" | translate
+    }}</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-sm ms-2">
+    {{ "CATALOG.APPLY" | translate }}
+  </button>
+  <button
+    type="button"
+    (click)="resetFilters()"
+    class="btn btn-secondary btn-sm ms-2"
+  >
+    {{ "CATALOG.RESET" | translate }}
+  </button>
+</form>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    @for (item of componentsService.paginatedResult()?.items; track item.id) {
+      <div class="col">
+        <app-component-card [component]="item"></app-component-card>
+      </div>
+    }
+  </div>
+@if ((componentsService.paginatedResult()?.pagination?.totalItems || 0) > 0) {
+<div class="d-flex justify-content-center my-4">
+  <pagination
+    [totalItems]="(componentsService.paginatedResult()?.pagination)!.totalItems"
+    [itemsPerPage]="
+      (componentsService.paginatedResult()?.pagination)!.itemsPerPage
+    "
+    [(ngModel)]="currentPage"
+    (pageChanged)="pageChanged($event)"
+    [rotate]="false"
+    [maxSize]="7"
+    [boundaryLinks]="true"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;"
+  ></pagination>
+</div>
+} }

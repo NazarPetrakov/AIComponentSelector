@@ -1,0 +1,50 @@
+<div class="hero mb-4">
+  <h1>{{ "HOME.TITLE" | translate }}</h1>
+  <p class="lead">
+    {{ "HOME.SUBTITLE" | translate }}
+  </p>
+  <a routerLink="/catalog/videocards" class="btn btn-light btn-lg mt-3">{{
+    "HOME.BUTTON_SEARCH" | translate
+  }}</a>
+  <a routerLink="/ai-selector" class="btn btn-light btn-lg mt-3 ms-3">{{
+    "HOME.BUTTON_AI" | translate
+  }}</a>
+</div>
+
+<div class="row text-center mb-4">
+  <div class="col-md-4">
+    <h5>
+      <i class="bi bi-search"></i> {{ "HOME.SMART_SEARCH_TITLE" | translate }}
+    </h5>
+    <p>{{ "HOME.SMART_SEARCH_DESC" | translate }}</p>
+  </div>
+  <div class="col-md-4">
+    <h5><i class="bi bi-cpu"></i> {{ "HOME.AI_TITLE" | translate }}</h5>
+    <p>{{ "HOME.AI_DESC" | translate }}</p>
+  </div>
+  <div class="col-md-4">
+    <h5>
+      <i class="bi bi-cash-coin"></i>
+      {{ "HOME.ACTUAL_PRICES_TITLE" | translate }}
+    </h5>
+    <p>{{ "HOME.ACTUAL_PRICES_DESC" | translate }}</p>
+  </div>
+</div>
+
+<h3 class="text-center mb-3">{{ "HOME.POPULAR_CATEGORIES" | translate }}</h3>
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+  <div class="col" *ngFor="let category of categories">
+    <div class="card category-card h-100">
+      <div
+        class="card-body d-flex flex-column align-items-center justify-content-center"
+      >
+        <h5 class="card-title">
+          {{ category }}
+        </h5>
+        <a [routerLink]="['/catalog', category]" class="card-button mt-3">
+          {{ "HOME.GO" | translate }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

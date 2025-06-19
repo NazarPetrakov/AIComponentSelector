@@ -1,0 +1,11 @@
+@if(loaderService.isLoading | async){
+<div class="loader-container">
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</div>
+}
+
+<app-nav></app-nav>
+
+<div class="container main">
+  <router-outlet></router-outlet>
+</div>
