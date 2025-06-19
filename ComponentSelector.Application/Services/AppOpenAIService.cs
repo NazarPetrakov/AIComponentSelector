@@ -26,7 +26,7 @@ public class AppOpenAIService : IAppOpenAIService
         _configuration = configuration;
         _client = openAIService;
         // _openAIService.SetDefaultModelId(Models.Gpt_4o);
-        _client.SetDefaultModelId(Models.Gpt_4o_mini);
+        _client.SetDefaultModelId(Models.Gpt_4_1);
     }
     public async Task ClearChatHistory(string userId)
     {

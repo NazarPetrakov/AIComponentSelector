@@ -16,7 +16,6 @@ builder.Services.AddAuthServices(configuration);
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 
 app.UseCors(x => x.AllowAnyHeader()
     .AllowAnyMethod()
@@ -25,9 +24,14 @@ app.UseCors(x => x.AllowAnyHeader()
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseStaticFiles();
+app.UseDefaultFiles();
+
 app.UseExceptionHandler();
 
 app.MapControllers();
+
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

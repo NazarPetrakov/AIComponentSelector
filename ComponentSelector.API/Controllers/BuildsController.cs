@@ -4,7 +4,6 @@ using ComponentSelector.Application.Contracts.Build;
 using ComponentSelector.Application.Helpers.Pagination;
 using ComponentSelector.Application.Helpers.QueryParams;
 using ComponentSelector.Application.IServices;
-using ComponentSelector.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +12,6 @@ namespace ComponentSelector.API.Controllers;
 [Authorize]
 public class BuildsController(IBuildService buildService) : BaseApiController
 {
-    // [HttpPost("")]
-    // public async Task<BuildDto> BuildPC(SearchBuildDto createBuildDto) =>
-    //     await buildService.BuildPC(createBuildDto);
     [HttpGet("ai-generate")]
     public async Task<BuildDto> GetAiBuildByPrice([FromQuery] ChatBuildRequest request) =>
         await buildService.AIBuildPC(request);
